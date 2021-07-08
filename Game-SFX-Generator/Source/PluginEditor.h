@@ -25,9 +25,11 @@ public:
     void resized() override;
 
 private:
+    juce::ToggleButton playbackButton;
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     GameSFXGeneratorAudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GameSFXGeneratorAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GameSFXGeneratorAudioProcessorEditor)
 };

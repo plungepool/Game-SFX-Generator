@@ -13,6 +13,9 @@
 //==============================================================================
 /**
 */
+class dsp;
+class MapUI;
+
 class GameSFXGeneratorAudioProcessor  : public juce::AudioProcessor
 {
 public:
@@ -53,7 +56,15 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+    void setGate(bool gate);
+
 private:
+    MapUI* fUI;
+    dsp* fDSP;
+    float** inputs;
+    float** outputs;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GameSFXGeneratorAudioProcessor)
 };

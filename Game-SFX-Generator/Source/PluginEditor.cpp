@@ -13,8 +13,12 @@
 GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (GameSFXGeneratorAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
+    playbackButton.setButtonText("PLAY");
+    playbackButton.onClick = [this] { 
+        audioProcessor.setGate(playbackButton.getToggleState()); 
+    };
+    addAndMakeVisible(playbackButton);
+
     setSize (400, 300);
 }
 
@@ -31,6 +35,8 @@ void GameSFXGeneratorAudioProcessorEditor::paint (juce::Graphics& g)
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
     g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+
+    playbackButton.setBounds(0, 0, 100, 100);
 }
 
 void GameSFXGeneratorAudioProcessorEditor::resized()

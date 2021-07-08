@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="odBl0P" name="Game-SFX-Generator" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1"
-              pluginAUMainType="'augn'" pluginVST3Category="Instrument">
+              pluginAUMainType="'augn'" pluginVST3Category="Fx">
   <MAINGROUP id="a3ou97" name="Game-SFX-Generator">
     <GROUP id="{A8EAF520-535F-E18E-00C8-5FFC776CED11}" name="Source">
       <FILE id="hXAI3M" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -12,6 +12,10 @@
       <FILE id="W4Y4Hc" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="UvqwKZ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <GROUP id="{2ED29D93-3282-9ED0-507A-83C1E252D494}" name="Faust">
+        <FILE id="LABFZH" name="FaustMainProcessor.h" compile="0" resource="0"
+              file="Source/Faust/FaustMainProcessor.h"/>
+      </GROUP>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
