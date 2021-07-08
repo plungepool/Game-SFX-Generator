@@ -8,8 +8,8 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-//#include "Faust/FaustMainProcessor.h"
-#include "Faust/FaustEffectTest.h"
+#include "Faust/FaustMainProcessor.h"
+//#include "Faust/FaustEffectTest.h"
 
 //==============================================================================
 GameSFXGeneratorAudioProcessor::GameSFXGeneratorAudioProcessor()
@@ -202,9 +202,9 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 void GameSFXGeneratorAudioProcessor::setGate(bool gate)
 {
     if (gate) {
-        fUI->setParamValue("adsr_gate", 1);
+        fUI->setParamValue("PLAY", 1);
     }
     else {
-        fUI->setParamValue("adsr_gate", 0);
+        fUI->setParamValue("PLAY", 0);
     }
 }
