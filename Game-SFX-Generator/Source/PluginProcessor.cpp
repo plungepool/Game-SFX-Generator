@@ -107,7 +107,7 @@ void GameSFXGeneratorAudioProcessor::prepareToPlay (double sampleRate, int sampl
         outputs[channel] = new float[samplesPerBlock];
     }
 
-    //playSource.prepareToPlay(playSource.getTotalLength(), sampleRate);
+    transportSource.prepareToPlay(transportSource.getTotalLength(), sampleRate);
 }
 
 void GameSFXGeneratorAudioProcessor::releaseResources()
@@ -120,6 +120,8 @@ void GameSFXGeneratorAudioProcessor::releaseResources()
     }
     delete[] inputs;
     delete[] outputs;
+
+    transportSource.releaseResources();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -155,8 +157,8 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     //Playback Sample
-    //juce::AudioSourceChannelInfo audioSourceChannelInfo(buffer);
-    //playSource.getNextAudioBlock(audioSourceChannelInfo);
+    juce::AudioSourceChannelInfo audioSourceChannelInfo(buffer);
+    transportSource.getNextAudioBlock(audioSourceChannelInfo);
 
     //Faust Processing
     for (int channel = 0; channel < totalNumInputChannels; ++channel) {
@@ -214,13 +216,13 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt() {
         );
 
     if (fileChooser.browseForFileToOpen()) {
-        juce::File currentFile;
-        currentFile = fileChooser.getResult();
+        auto currentFile = fileChooser.getResult();
+        auto* audioReader = audioFormatManager.createReaderFor(currentFile);
 
-        juce::AudioFormatReader* audioReader = audioFormatManager.createReaderFor(currentFile);
-
-        if (audioReader) {
-            audioReader->read(inputs, audioReader->numChannels, 0, audioReader->lengthInSamples);
+        if (audioReader != nullptr) {
+            std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
+            transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
+            readerSource.reset(tempSource.release());
         }
     }
 }

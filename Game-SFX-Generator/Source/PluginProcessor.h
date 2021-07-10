@@ -63,7 +63,8 @@ public:
 
 private:
     juce::AudioFormatManager audioFormatManager;
-    //juce::AudioFormatReaderSource playSource;
+    std::unique_ptr <juce::AudioFormatReaderSource> readerSource;
+    juce::AudioTransportSource transportSource;
 
     MapUI* fUI;
     dsp* fDSP;
