@@ -57,9 +57,14 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
+    void loadFilePrompt();
+
     void setGate(bool gate);
 
 private:
+    juce::AudioFormatManager audioFormatManager;
+    //juce::AudioFormatReaderSource playSource;
+
     MapUI* fUI;
     dsp* fDSP;
     float** inputs;

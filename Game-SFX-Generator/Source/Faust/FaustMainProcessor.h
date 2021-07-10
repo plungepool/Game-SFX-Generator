@@ -658,7 +658,9 @@ class mydsp : public dsp {
 	float fRec18[2];
 	FAUSTFLOAT fHslider10;
 	float fRec19[2];
-	int iRec20[2];
+	FAUSTFLOAT fHslider11;
+	float fRec20[2];
+	int iRec21[2];
 	float fRec14[2];
 	float fVec5[131072];
 	float fVec6[131072];
@@ -727,7 +729,8 @@ class mydsp : public dsp {
 		fHslider7 = FAUSTFLOAT(10.0f);
 		fHslider8 = FAUSTFLOAT(30000.0f);
 		fHslider9 = FAUSTFLOAT(1.0f);
-		fHslider10 = FAUSTFLOAT(1.0f);
+		fHslider10 = FAUSTFLOAT(0.5f);
+		fHslider11 = FAUSTFLOAT(1.0f);
 	}
 	
 	virtual void instanceClear() {
@@ -805,19 +808,22 @@ class mydsp : public dsp {
 			fRec19[l23] = 0.0f;
 		}
 		for (int l24 = 0; (l24 < 2); l24 = (l24 + 1)) {
-			iRec20[l24] = 0;
+			fRec20[l24] = 0.0f;
 		}
 		for (int l25 = 0; (l25 < 2); l25 = (l25 + 1)) {
-			fRec14[l25] = 0.0f;
+			iRec21[l25] = 0;
 		}
-		for (int l26 = 0; (l26 < 131072); l26 = (l26 + 1)) {
-			fVec5[l26] = 0.0f;
+		for (int l26 = 0; (l26 < 2); l26 = (l26 + 1)) {
+			fRec14[l26] = 0.0f;
 		}
 		for (int l27 = 0; (l27 < 131072); l27 = (l27 + 1)) {
-			fVec6[l27] = 0.0f;
+			fVec5[l27] = 0.0f;
 		}
 		for (int l28 = 0; (l28 < 131072); l28 = (l28 + 1)) {
-			fVec7[l28] = 0.0f;
+			fVec6[l28] = 0.0f;
+		}
+		for (int l29 = 0; (l29 < 131072); l29 = (l29 + 1)) {
+			fVec7[l29] = 0.0f;
 		}
 	}
 	
@@ -858,7 +864,8 @@ class mydsp : public dsp {
 		ui_interface->addHorizontalSlider("Delay", &fHslider8, 30000.0f, 0.0f, 384000.0f, 0.100000001f);
 		ui_interface->addHorizontalSlider("Depth", &fHslider7, 10.0f, -20.0f, 20.0f, 0.100000001f);
 		ui_interface->addHorizontalSlider("attack", &fHslider9, 1.0f, 0.0f, 10.0f, 0.00100000005f);
-		ui_interface->addHorizontalSlider("decay", &fHslider10, 1.0f, 0.0f, 10.0f, 0.00100000005f);
+		ui_interface->addHorizontalSlider("decay", &fHslider11, 1.0f, 0.0f, 10.0f, 0.00100000005f);
+		ui_interface->addHorizontalSlider("sustain", &fHslider10, 0.5f, 0.0f, 10.0f, 0.00100000005f);
 		ui_interface->closeBox();
 		ui_interface->openVerticalBox("04 ADSR");
 		ui_interface->addHorizontalSlider("attack", &fHslider0, 0.300000012f, 0.0f, 10.0f, 0.00100000005f);
@@ -893,6 +900,7 @@ class mydsp : public dsp {
 		float fSlow17 = (fConst1 * float(fHslider8));
 		float fSlow18 = (fConst1 * float(fHslider9));
 		float fSlow19 = (fConst1 * float(fHslider10));
+		float fSlow20 = (fConst1 * float(fHslider11));
 		for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
 			fRec0[0] = (fSlow0 + (fConst2 * fRec0[1]));
 			fVec0[0] = fSlow1;
@@ -960,8 +968,9 @@ class mydsp : public dsp {
 			fRec18[0] = (fSlow18 + (fConst2 * fRec18[1]));
 			float fTemp41 = std::max<float>(1.0f, (fConst0 * fRec18[0]));
 			fRec19[0] = (fSlow19 + (fConst2 * fRec19[1]));
-			iRec20[0] = (iSlow13 * (iRec20[1] + 1));
-			fRec14[0] = std::fmod((fRec14[1] + (1001.0f - std::pow(2.0f, (fSlow16 * (float((((fRec15[0] < fRec16[0]) & (fRec15[0] != 0.0f)) ? 0 : 1)) * std::max<float>(0.0f, (std::min<float>((fRec17[0] / fTemp41), std::max<float>(((0.5f * ((fTemp41 - fRec17[0]) / std::max<float>(1.0f, (fConst0 * fRec19[0])))) + 1.0f), 0.5f)) * (1.0f - float(iRec20[0]))))))))), 1000.0f);
+			fRec20[0] = (fSlow20 + (fConst2 * fRec20[1]));
+			iRec21[0] = (iSlow13 * (iRec21[1] + 1));
+			fRec14[0] = std::fmod((fRec14[1] + (1001.0f - std::pow(2.0f, (fSlow16 * (float((((fRec15[0] < fRec16[0]) & (fRec15[0] != 0.0f)) ? 0 : 1)) * std::max<float>(0.0f, (std::min<float>((fRec17[0] / fTemp41), std::max<float>(((((1.0f - fRec19[0]) * (fTemp41 - fRec17[0])) / std::max<float>(1.0f, (fConst0 * fRec20[0]))) + 1.0f), fRec19[0])) * (1.0f - float(iRec21[0]))))))))), 1000.0f);
 			int iTemp42 = int(fRec14[0]);
 			int iTemp43 = std::min<int>(65537, int(std::max<int>(0, int(iTemp42))));
 			float fTemp44 = std::floor(fRec14[0]);
@@ -1007,7 +1016,8 @@ class mydsp : public dsp {
 			fRec17[1] = fRec17[0];
 			fRec18[1] = fRec18[0];
 			fRec19[1] = fRec19[0];
-			iRec20[1] = iRec20[0];
+			fRec20[1] = fRec20[0];
+			iRec21[1] = iRec21[0];
 			fRec14[1] = fRec14[0];
 		}
 	}

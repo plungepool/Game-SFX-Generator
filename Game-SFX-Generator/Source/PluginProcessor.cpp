@@ -24,6 +24,7 @@ GameSFXGeneratorAudioProcessor::GameSFXGeneratorAudioProcessor()
                        )
 #endif
 {
+    audioFormatManager.registerBasicFormats();
 }
 
 GameSFXGeneratorAudioProcessor::~GameSFXGeneratorAudioProcessor()
@@ -105,6 +106,8 @@ void GameSFXGeneratorAudioProcessor::prepareToPlay (double sampleRate, int sampl
         inputs[channel] = new float[samplesPerBlock];
         outputs[channel] = new float[samplesPerBlock];
     }
+
+    //playSource.prepareToPlay(playSource.getTotalLength(), sampleRate);
 }
 
 void GameSFXGeneratorAudioProcessor::releaseResources()
@@ -151,6 +154,11 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    //Playback Sample
+    //juce::AudioSourceChannelInfo audioSourceChannelInfo(buffer);
+    //playSource.getNextAudioBlock(audioSourceChannelInfo);
+
+    //Faust Processing
     for (int channel = 0; channel < totalNumInputChannels; ++channel) {
         for (int i = 0; i < buffer.getNumSamples(); i++) {
             inputs[channel][i] = *buffer.getWritePointer(channel, i);
@@ -199,6 +207,24 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 }
 
 //==============================================================================
+void GameSFXGeneratorAudioProcessor::loadFilePrompt() {
+    juce::FileChooser fileChooser("Choose a .wav file", 
+        juce::File::getSpecialLocation(juce::File::userDesktopDirectory), 
+        "* .wav", true, false
+        );
+
+    if (fileChooser.browseForFileToOpen()) {
+        juce::File currentFile;
+        currentFile = fileChooser.getResult();
+
+        juce::AudioFormatReader* audioReader = audioFormatManager.createReaderFor(currentFile);
+
+        if (audioReader) {
+            audioReader->read(inputs, audioReader->numChannels, 0, audioReader->lengthInSamples);
+        }
+    }
+}
+
 void GameSFXGeneratorAudioProcessor::setGate(bool gate)
 {
     if (gate) {

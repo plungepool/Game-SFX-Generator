@@ -13,6 +13,12 @@
 GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (GameSFXGeneratorAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    loadFileButton.setButtonText("Open File...");
+    loadFileButton.onClick = [this] {
+        audioProcessor.loadFilePrompt();
+    };
+    addAndMakeVisible(loadFileButton);
+
     playbackButton.setButtonText("PLAY");
     playbackButton.onClick = [this] { 
         audioProcessor.setGate(playbackButton.getToggleState()); 
@@ -36,7 +42,8 @@ void GameSFXGeneratorAudioProcessorEditor::paint (juce::Graphics& g)
     g.setFont (15.0f);
     g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 
-    playbackButton.setBounds(0, 0, 100, 100);
+    loadFileButton.setBounds(0, 0, 100, 50);
+    playbackButton.setBounds(getWidth()-100, getHeight()-100, 100, 100);
 }
 
 void GameSFXGeneratorAudioProcessorEditor::resized()

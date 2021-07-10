@@ -25,6 +25,7 @@ public:
     void resized() override;
 
 private:
+    juce::TextButton loadFileButton;
     juce::ToggleButton playbackButton;
 
     // This reference is provided as a quick way for your editor to
