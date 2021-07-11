@@ -107,7 +107,9 @@ void GameSFXGeneratorAudioProcessor::prepareToPlay (double sampleRate, int sampl
         outputs[channel] = new float[samplesPerBlock];
     }
 
-    transportSource.prepareToPlay(transportSource.getTotalLength(), sampleRate);
+    transportSource.prepareToPlay(512, sampleRate);
+    // Could load whole file with transportSource.getTotalLength()
+    // but is it a good idea? 512 samples at a time should be enough
 }
 
 void GameSFXGeneratorAudioProcessor::releaseResources()
