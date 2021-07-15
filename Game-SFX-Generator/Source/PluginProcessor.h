@@ -95,6 +95,8 @@ private:
     float** inputs;
     float** outputs;
 
+    int randomInt(float min, float max);
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GameSFXGeneratorAudioProcessor)
 };
