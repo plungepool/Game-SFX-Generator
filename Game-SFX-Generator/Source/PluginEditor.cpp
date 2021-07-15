@@ -14,17 +14,52 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     loadFileButton.setButtonText("Open File...");
-    loadFileButton.onClick = [this] {
+    loadFileButton.onClick = [this] 
+    {
         audioProcessor.loadFilePrompt();
     };
     addAndMakeVisible(loadFileButton);
 
     playbackButton.setButtonText("PLAY");
-    playbackButton.onClick = [this] { 
+    playbackButton.onClick = [this] 
+    { 
         audioProcessor.setPlayback(playbackButton.getToggleState());
         audioProcessor.setGate(playbackButton.getToggleState()); 
     };
     addAndMakeVisible(playbackButton);
+
+    //RANDOM SAMPLE GROUP
+    randomizeSampleGroup.setButtonText("Randomize Sample");
+    randomizeSampleGroup.onClick = [this]
+    {
+        audioProcessor.randomizePitch();
+        audioProcessor.randomizeADSR();
+    };
+    addAndMakeVisible(randomizeSampleGroup);
+
+    //RANDOM VIBRATO GROUP
+    randomizeVibratoGroup.setButtonText("Randomize Vibrato");
+    randomizeVibratoGroup.onClick = [this]
+    {
+        audioProcessor.randomizeVibRate();
+        audioProcessor.randomizeVibDutyCycle();
+        audioProcessor.randomizeVibShape();
+        audioProcessor.randomizeVibDepth();
+        audioProcessor.randomizeVibDelay();
+    };
+    addAndMakeVisible(randomizeVibratoGroup);
+
+    //RANDOM PITCH ENV GROUP
+    randomizePitchEnvGroup.setButtonText("Randomize Pitch Env");
+    randomizePitchEnvGroup.onClick = [this]
+    {
+        audioProcessor.randomizePitchEnvAttack();
+        audioProcessor.randomizePitchEnvDecay();
+        audioProcessor.randomizePitchEnvSustain();
+        audioProcessor.randomizePitchEnvDepth();
+        audioProcessor.randomizePitchEnvDelay();
+    };
+    addAndMakeVisible(randomizePitchEnvGroup);
 
     setSize (400, 300);
 }
@@ -45,6 +80,9 @@ void GameSFXGeneratorAudioProcessorEditor::paint (juce::Graphics& g)
 
     loadFileButton.setBounds(0, 0, 100, 50);
     playbackButton.setBounds(getWidth()-100, getHeight()-100, 100, 100);
+    randomizeSampleGroup.setBounds(50, 100, 100, 100);
+    randomizeVibratoGroup.setBounds(150, 100, 100, 100);
+    randomizePitchEnvGroup.setBounds(250, 100, 100, 100);
 }
 
 void GameSFXGeneratorAudioProcessorEditor::resized()

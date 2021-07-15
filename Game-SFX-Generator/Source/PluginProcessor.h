@@ -63,6 +63,22 @@ public:
     //Faust
     void setGate(bool gate);
 
+    void randomizeSample();
+    void randomizePitch();
+    void randomizeADSR();
+
+    void randomizeVibRate();
+    void randomizeVibDutyCycle();
+    void randomizeVibShape();
+    void randomizeVibDepth();
+    void randomizeVibDelay();
+
+    void randomizePitchEnvAttack();
+    void randomizePitchEnvDecay();
+    void randomizePitchEnvSustain();
+    void randomizePitchEnvDepth();
+    void randomizePitchEnvDelay();
+
 private:
     juce::AudioFormatManager audioFormatManager;
     std::unique_ptr <juce::AudioFormatReaderSource> readerSource;

@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="odBl0P" name="Game-SFX-Generator" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1"
-              pluginAUMainType="'augn'" pluginVST3Category="Fx" pluginFormats="buildVST3">
+              pluginAUMainType="'augn'" pluginVST3Category="Fx" pluginFormats="buildStandalone,buildVST3">
   <MAINGROUP id="a3ou97" name="Game-SFX-Generator">
     <GROUP id="{A8EAF520-535F-E18E-00C8-5FFC776CED11}" name="Source">
       <FILE id="hXAI3M" name="PluginProcessor.cpp" compile="1" resource="0"

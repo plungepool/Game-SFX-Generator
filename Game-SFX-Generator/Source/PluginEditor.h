@@ -28,6 +28,10 @@ private:
     juce::TextButton loadFileButton;
     juce::ToggleButton playbackButton;
 
+    juce::TextButton randomizeSampleGroup;
+    juce::TextButton randomizeVibratoGroup;
+    juce::TextButton randomizePitchEnvGroup;
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     GameSFXGeneratorAudioProcessor& audioProcessor;
