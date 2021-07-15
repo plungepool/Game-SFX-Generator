@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <random>
 
 //==============================================================================
 /**
@@ -78,6 +79,11 @@ public:
     void randomizePitchEnvSustain();
     void randomizePitchEnvDepth();
     void randomizePitchEnvDelay();
+
+    //Debug
+    std::string sampleDebug();
+    std::string vibDebug();
+    std::string pitchenvDebug();
 
 private:
     juce::AudioFormatManager audioFormatManager;

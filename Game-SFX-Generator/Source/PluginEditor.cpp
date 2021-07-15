@@ -34,6 +34,9 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     {
         audioProcessor.randomizePitch();
         audioProcessor.randomizeADSR();
+
+        sampleDebugText.setText(audioProcessor.sampleDebug());
+        repaint(0, 0, getWidth(), getHeight());
     };
     addAndMakeVisible(randomizeSampleGroup);
 
@@ -46,6 +49,9 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
         audioProcessor.randomizeVibShape();
         audioProcessor.randomizeVibDepth();
         audioProcessor.randomizeVibDelay();
+
+        vibDebugText.setText(audioProcessor.vibDebug());
+        repaint(0, 0, getWidth(), getHeight());
     };
     addAndMakeVisible(randomizeVibratoGroup);
 
@@ -58,6 +64,9 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
         audioProcessor.randomizePitchEnvSustain();
         audioProcessor.randomizePitchEnvDepth();
         audioProcessor.randomizePitchEnvDelay();
+
+        pitchenvDebugText.setText(audioProcessor.pitchenvDebug());
+        repaint(0, 0, getWidth(), getHeight());
     };
     addAndMakeVisible(randomizePitchEnvGroup);
 
@@ -75,11 +84,13 @@ void GameSFXGeneratorAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
     g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    g.setFont (12.0f);
+    g.drawFittedText (sampleDebugText.getText(), getLocalBounds(), juce::Justification::bottomLeft, 1);
+    g.drawFittedText(vibDebugText.getText(), getLocalBounds(), juce::Justification::centredBottom, 1);
+    g.drawFittedText(pitchenvDebugText.getText(), getLocalBounds(), juce::Justification::bottomRight, 1);
 
     loadFileButton.setBounds(0, 0, 100, 50);
-    playbackButton.setBounds(getWidth()-100, getHeight()-100, 100, 100);
+    playbackButton.setBounds(getWidth()-100, 25, 100, 100);
     randomizeSampleGroup.setBounds(50, 100, 100, 100);
     randomizeVibratoGroup.setBounds(150, 100, 100, 100);
     randomizePitchEnvGroup.setBounds(250, 100, 100, 100);

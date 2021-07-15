@@ -264,10 +264,11 @@ void GameSFXGeneratorAudioProcessor::randomizeSample()
 
 void GameSFXGeneratorAudioProcessor::randomizePitch()
 {
-    int min = -48;
-    int max = 48;
+    int min = -4800;
+    int max = 4800;
+    float res = 100;
     float randomizedValue = (min)+(std::rand() % (max - (min)+1));
-    fUI->setParamValue("PitchShift", randomizedValue);
+    fUI->setParamValue("PitchShift", randomizedValue / res);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizeADSR()
@@ -290,7 +291,7 @@ void GameSFXGeneratorAudioProcessor::randomizeVibRate()
     int min = 0;
     int max = 250;
     float res = 10;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("Vib_Freq", randomizedValue / res);
 }
 
@@ -299,7 +300,7 @@ void GameSFXGeneratorAudioProcessor::randomizeVibDutyCycle()
     int min = 0;
     int max = 4;
     float res = 4;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("Vib_Duty", randomizedValue / res);
 }
 
@@ -308,7 +309,7 @@ void GameSFXGeneratorAudioProcessor::randomizeVibShape()
     int min = 0;
     int max = 2;
     float res = 1;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("Vib_LFOShape", randomizedValue / res);
 }
 
@@ -317,7 +318,7 @@ void GameSFXGeneratorAudioProcessor::randomizeVibDepth()
     int min = 0;
     int max = 200;
     float res = 10;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("Vib_Depth", randomizedValue / res);
 }
 
@@ -325,9 +326,8 @@ void GameSFXGeneratorAudioProcessor::randomizeVibDelay()
 {
     int min = 0;
     int max = transportSource.getTotalLength();
-    float res = 1;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
-    fUI->setParamValue("Vib_Delay", randomizedValue / res);
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    fUI->setParamValue("Vib_Delay", randomizedValue);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitchEnvAttack()
@@ -335,7 +335,7 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvAttack()
     int min = 0;
     int max = 1000;
     float res = 100;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("PitchEnv_Attack", randomizedValue / res);
 }
 
@@ -344,7 +344,7 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvDecay()
     int min = 0;
     int max = 1000;
     float res = 100;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("PitchEnv_Decay", randomizedValue / res);
 }
 
@@ -353,7 +353,7 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvSustain()
     int min = 0;
     int max = 1000;
     float res = 100;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("PitchEnv_Sustain", randomizedValue / res);
 }
 
@@ -362,7 +362,7 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvDepth()
     int min = -200;
     int max = 200;
     float res = 10;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
     fUI->setParamValue("PitchEnv_Depth", randomizedValue / res);
 }
 
@@ -370,7 +370,57 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvDelay()
 {
     int min = 0;
     int max = transportSource.getTotalLength();
-    float res = 1;
-    int randomizedValue = (min)+(std::rand() % (max - (min)+1));
-    fUI->setParamValue("PitchEnv_Delay", randomizedValue / res);
+    float randomizedValue = (min)+(std::rand() % (max - (min)+1));
+    fUI->setParamValue("PitchEnv_Delay", randomizedValue);
+}
+
+//Debug
+std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
+    std::string pitchDebug = std::to_string(fUI->getParamValue("PitchShift"));
+    std::string envatkDebug = std::to_string(fUI->getParamValue("Env_Attack"));
+    std::string envdcyDebug = std::to_string(fUI->getParamValue("Env_Decay"));
+    std::string samplerateDebug = std::to_string(getSampleRate());
+    std::string samplelengthDebug = std::to_string(transportSource.getTotalLength());
+
+    std::string sampleDebugText =   "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
+                                    "Atk: " + envatkDebug.substr(0, 4) + " sec\n" +
+                                    "Dcy: " + envdcyDebug.substr(0, 4) + " sec\n" +
+                                    "Sample Rate: " + samplerateDebug.substr(0, 5) + "\n" +
+                                    "Length: " + samplelengthDebug;
+
+    return sampleDebugText;
+}
+
+std::string GameSFXGeneratorAudioProcessor::vibDebug()
+{
+    std::string vibrateDebug = std::to_string(fUI->getParamValue("Vib_Freq"));
+    std::string vibdutyDebug = std::to_string(fUI->getParamValue("Vib_Duty"));
+    std::string vibshapeDebug = std::to_string(fUI->getParamValue("Vib_LFOShape"));
+    std::string vibdepthDebug = std::to_string(fUI->getParamValue("Vib_Depth"));
+    std::string vibdelayDebug = std::to_string(fUI->getParamValue("Vib_Delay") / getSampleRate());
+
+    std::string vibDebugText =  "Rate: " + vibrateDebug.substr(0,4) + " hz\n" +
+                                "Duty: " + vibdutyDebug.substr(0, 4) + "%\n" +
+                                "Shape: " + vibshapeDebug.substr(0, 1) + "\n" +
+                                "Depth: " + vibdepthDebug.substr(0, 4) + "\n" +
+                                "Delay: " + vibdelayDebug.substr(0, 6) + " sec\n";
+
+    return vibDebugText;
+}
+
+std::string GameSFXGeneratorAudioProcessor::pitchenvDebug()
+{
+    std::string peatkDebug = std::to_string(fUI->getParamValue("PitchEnv_Attack"));
+    std::string pedcyDebug = std::to_string(fUI->getParamValue("PitchEnv_Decay"));
+    std::string pesusDebug = std::to_string(fUI->getParamValue("PitchEnv_Sustain"));
+    std::string pedepthDebug = std::to_string(fUI->getParamValue("PitchEnv_Depth"));
+    std::string pedelayDebug = std::to_string(fUI->getParamValue("PitchEnv_Delay") / getSampleRate());
+
+    std::string pitchenvDebugText = "Atk: " + peatkDebug.substr(0, 4) + " sec\n" +
+        "Dcy: " + pedcyDebug.substr(0, 4) + " sec\n" +
+        "Sus: " + pesusDebug.substr(0, 4) + " sec\n" +
+        "Depth: " + pedepthDebug.substr(0, 4) + "\n" +
+        "Delay: " + pedelayDebug.substr(0, 6) + " sec\n";
+
+    return pitchenvDebugText;
 }

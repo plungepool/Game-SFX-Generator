@@ -32,6 +32,11 @@ private:
     juce::TextButton randomizeVibratoGroup;
     juce::TextButton randomizePitchEnvGroup;
 
+    //Debug
+    juce::DrawableText sampleDebugText;
+    juce::DrawableText vibDebugText;
+    juce::DrawableText pitchenvDebugText;
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     GameSFXGeneratorAudioProcessor& audioProcessor;
