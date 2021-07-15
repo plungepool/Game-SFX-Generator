@@ -21,6 +21,7 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
 
     playbackButton.setButtonText("PLAY");
     playbackButton.onClick = [this] { 
+        audioProcessor.setPlayback(playbackButton.getToggleState());
         audioProcessor.setGate(playbackButton.getToggleState()); 
     };
     addAndMakeVisible(playbackButton);

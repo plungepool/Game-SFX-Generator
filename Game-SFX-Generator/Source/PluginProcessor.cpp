@@ -160,6 +160,11 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
 
     //Playback Sample
     juce::AudioSourceChannelInfo audioSourceChannelInfo(buffer);
+    if (readerSource.get() == nullptr)
+    {
+        audioSourceChannelInfo.clearActiveBufferRegion();
+        return;
+    }
     transportSource.getNextAudioBlock(audioSourceChannelInfo);
 
     //Faust Processing
@@ -229,6 +234,17 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt() {
     }
 }
 
+void GameSFXGeneratorAudioProcessor::setPlayback(bool gate) {
+    if (gate) {
+        transportSource.start();
+    }
+    else {
+        transportSource.stop();
+        transportSource.setPosition(0.0);
+    }
+}
+
+//Faust
 void GameSFXGeneratorAudioProcessor::setGate(bool gate)
 {
     if (gate) {

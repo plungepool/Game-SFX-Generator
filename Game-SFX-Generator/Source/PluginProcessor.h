@@ -58,7 +58,9 @@ public:
 
     //==============================================================================
     void loadFilePrompt();
+    void setPlayback(bool gate);
 
+    //Faust
     void setGate(bool gate);
 
 private:
