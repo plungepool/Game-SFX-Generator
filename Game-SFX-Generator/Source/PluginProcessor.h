@@ -61,7 +61,7 @@ public:
     void loadFilePrompt();
     void setPlayback(bool gate);
 
-    //Faust
+    //Faust Setters
     void setGate(bool gate);
 
     void randomizeSample();
@@ -80,21 +80,26 @@ public:
     void randomizePitchEnvDepth();
     void randomizePitchEnvDelay();
 
+    void randomizeAll();
+
     //Debug
     std::string sampleDebug();
     std::string vibDebug();
     std::string pitchenvDebug();
 
 private:
+    //Audio I/O
     juce::AudioFormatManager audioFormatManager;
     std::unique_ptr <juce::AudioFormatReaderSource> readerSource;
     juce::AudioTransportSource transportSource;
 
+    //Faust I/O
     MapUI* fUI;
     dsp* fDSP;
     float** inputs;
     float** outputs;
 
+    //Random Number Functions
     int randomInt(float min, float max);
 
     //==============================================================================

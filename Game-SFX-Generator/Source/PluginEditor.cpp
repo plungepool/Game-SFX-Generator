@@ -17,6 +17,11 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     loadFileButton.onClick = [this] 
     {
         audioProcessor.loadFilePrompt();
+        audioProcessor.randomizeAll();
+        sampleDebugText.setText(audioProcessor.sampleDebug());
+        vibDebugText.setText(audioProcessor.vibDebug());
+        pitchenvDebugText.setText(audioProcessor.pitchenvDebug());
+        repaint(0, 0, getWidth(), getHeight());
     };
     addAndMakeVisible(loadFileButton);
 
@@ -32,6 +37,7 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     randomizeSampleGroup.setButtonText("Randomize Sample");
     randomizeSampleGroup.onClick = [this]
     {
+        audioProcessor.randomizeSample();
         audioProcessor.randomizePitch();
         audioProcessor.randomizeADSR();
 

@@ -246,7 +246,7 @@ void GameSFXGeneratorAudioProcessor::setPlayback(bool gate)
     }
 }
 
-//Faust
+//Faust Setters
 void GameSFXGeneratorAudioProcessor::setGate(bool gate)
 {
     if (gate) {
@@ -259,29 +259,29 @@ void GameSFXGeneratorAudioProcessor::setGate(bool gate)
 
 void GameSFXGeneratorAudioProcessor::randomizeSample()
 {
-    ;
+    ; //TODO
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitch()
 {
-    int min = -4800;
-    int max = 4800;
     float res = 100;
+    int min = -48 * res;
+    int max = 48 * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchShift", randomizedValue / res);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizeADSR()
 {
-    int minAtk = 0;
-    int maxAtk = 100;
     float resAtk = 10;
+    int minAtk = 0;
+    int maxAtk = (transportSource.getTotalLength() / getSampleRate()) * resAtk;
     float randomizedValueAtk = randomInt(minAtk, maxAtk);
     fUI->setParamValue("Env_Attack", randomizedValueAtk / resAtk);
 
+    float resDcy = 10;
     int minDcy = 0;
-    int maxDcy = 1000;
-    float resDcy = 100;
+    int maxDcy = (transportSource.getTotalLength() / getSampleRate()) * resDcy;
     float randomizedValueDcy = randomInt(minDcy, maxDcy);
     fUI->setParamValue("Env_Decay", randomizedValueDcy / resDcy);
 
@@ -290,18 +290,18 @@ void GameSFXGeneratorAudioProcessor::randomizeADSR()
 
 void GameSFXGeneratorAudioProcessor::randomizeVibRate()
 {
-    int min = 0;
-    int max = 250;
     float res = 10;
+    int min = 0;
+    int max = 25 * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("Vib_Freq", randomizedValue / res);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizeVibDutyCycle()
 {
-    int min = 0;
-    int max = 4;
     float res = 4;
+    int min = 0;
+    int max = 1 * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("Vib_Duty", randomizedValue / res);
 }
@@ -316,9 +316,9 @@ void GameSFXGeneratorAudioProcessor::randomizeVibShape()
 
 void GameSFXGeneratorAudioProcessor::randomizeVibDepth()
 {
-    int min = 0;
-    int max = 200;
     float res = 10;
+    int min = 0;
+    int max = 20 * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("Vib_Depth", randomizedValue / res);
 }
@@ -333,36 +333,36 @@ void GameSFXGeneratorAudioProcessor::randomizeVibDelay()
 
 void GameSFXGeneratorAudioProcessor::randomizePitchEnvAttack()
 {
-    int min = 0;
-    int max = 1000;
     float res = 100;
+    int min = 0;
+    int max = (transportSource.getTotalLength() / getSampleRate()) * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchEnv_Attack", randomizedValue / res);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitchEnvDecay()
 {
-    int min = 0;
-    int max = 1000;
     float res = 100;
+    int min = 0;
+    int max = (transportSource.getTotalLength() / getSampleRate()) * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchEnv_Decay", randomizedValue / res);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitchEnvSustain()
 {
-    int min = 0;
-    int max = 1000;
     float res = 100;
+    int min = 0;
+    int max = (transportSource.getTotalLength() / getSampleRate()) * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchEnv_Sustain", randomizedValue / res);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitchEnvDepth()
 {
-    int min = -200;
-    int max = 200;
     float res = 10;
+    int min = -20 * res;
+    int max = 20 * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchEnv_Depth", randomizedValue / res);
 }
@@ -373,6 +373,25 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvDelay()
     int max = transportSource.getTotalLength();
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchEnv_Delay", randomizedValue);
+}
+
+void GameSFXGeneratorAudioProcessor::randomizeAll()
+{
+    randomizeSample();
+    randomizePitch();
+    randomizeADSR();
+
+    randomizeVibRate();
+    randomizeVibDutyCycle();
+    randomizeVibShape();
+    randomizeVibDepth();
+    randomizeVibDelay();
+
+    randomizePitchEnvAttack();
+    randomizePitchEnvDecay();
+    randomizePitchEnvSustain();
+    randomizePitchEnvDepth();
+    randomizePitchEnvDelay();
 }
 
 //Debug
@@ -392,6 +411,7 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     return sampleDebugText;
 }
 
+//Debug
 std::string GameSFXGeneratorAudioProcessor::vibDebug()
 {
     std::string vibrateDebug = std::to_string(fUI->getParamValue("Vib_Freq"));
