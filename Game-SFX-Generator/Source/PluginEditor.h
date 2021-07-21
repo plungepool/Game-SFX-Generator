@@ -24,9 +24,12 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void static setPlaybackToggle(bool state);
+    bool getPlaybackToggleState();
+
 private:
     juce::TextButton loadFileButton;
-    juce::ToggleButton playbackButton;
+    juce::ToggleButton static playbackButton;
 
     juce::TextButton randomizeSampleGroup;
     juce::TextButton randomizeVibratoGroup;

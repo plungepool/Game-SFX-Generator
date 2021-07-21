@@ -9,7 +9,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "Faust/FaustMainProcessor.h"
-//#include "Faust/FaustEffectTest.h"
 
 //==============================================================================
 GameSFXGeneratorAudioProcessor::GameSFXGeneratorAudioProcessor()
@@ -181,6 +180,9 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
             *buffer.getWritePointer(channel, i) = outputs[channel][i];
         }
     }
+
+    disablePlaybackButtonIfEnvelopeClosed();
+    disablePlaybackButtonIfStreamFinished();
 }
 
 //==============================================================================
@@ -243,6 +245,30 @@ void GameSFXGeneratorAudioProcessor::setPlayback(bool gate)
     else {
         transportSource.stop();
         transportSource.setPosition(0.0);
+    }
+}
+
+void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed() {
+    double atkTime = fUI->getParamValue("Env_Attack");
+    double dcyTime = fUI->getParamValue("Env_Decay");
+    if (transportSource.getCurrentPosition() >= (atkTime + dcyTime)) {
+        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+        setGate(false);
+        setPlayback(false);
+    }
+    else {
+        return;
+    }
+}
+
+void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished() {
+    if (transportSource.hasStreamFinished()) {
+        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+        setGate(false);
+        setPlayback(false);
+    }
+    else {
+        return;
     }
 }
 
@@ -411,7 +437,6 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     return sampleDebugText;
 }
 
-//Debug
 std::string GameSFXGeneratorAudioProcessor::vibDebug()
 {
     std::string vibrateDebug = std::to_string(fUI->getParamValue("Vib_Freq"));
@@ -446,6 +471,7 @@ std::string GameSFXGeneratorAudioProcessor::pitchenvDebug()
     return pitchenvDebugText;
 }
 
+//Random Number Functions
 int GameSFXGeneratorAudioProcessor::randomInt(float min, float max)
 {
     std::random_device rd;

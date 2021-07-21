@@ -107,3 +107,13 @@ void GameSFXGeneratorAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 }
+
+juce::ToggleButton GameSFXGeneratorAudioProcessorEditor::playbackButton;
+
+void GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(bool state) {
+    playbackButton.setToggleState(state, juce::dontSendNotification);
+}
+
+bool GameSFXGeneratorAudioProcessorEditor::getPlaybackToggleState() {
+    return playbackButton.getToggleState();
+}

@@ -60,6 +60,8 @@ public:
     //==============================================================================
     void loadFilePrompt();
     void setPlayback(bool gate);
+    void disablePlaybackButtonIfEnvelopeClosed();
+    void disablePlaybackButtonIfStreamFinished();
 
     //Faust Setters
     void setGate(bool gate);
