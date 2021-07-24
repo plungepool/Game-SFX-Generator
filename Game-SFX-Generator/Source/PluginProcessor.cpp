@@ -252,9 +252,9 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed() {
     double atkTime = fUI->getParamValue("Env_Attack");
     double dcyTime = fUI->getParamValue("Env_Decay");
     if (transportSource.getCurrentPosition() >= (atkTime + dcyTime)) {
-        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         setGate(false);
         setPlayback(false);
+        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
     }
     else {
         return;
@@ -263,9 +263,9 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed() {
 
 void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished() {
     if (transportSource.hasStreamFinished()) {
-        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         setGate(false);
         setPlayback(false);
+        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
     }
     else {
         return;
@@ -379,7 +379,7 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvSustain()
 {
     float res = 100;
     int min = 0;
-    int max = (transportSource.getTotalLength() / getSampleRate()) * res;
+    int max = 1 * res;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchEnv_Sustain", randomizedValue / res);
 }
@@ -430,7 +430,7 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
 
     std::string sampleDebugText =   "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
                                     "Atk: " + envatkDebug.substr(0, 4) + " sec\n" +
-                                    "Dcy: " + envdcyDebug.substr(0, 4) + " sec\n" +
+                                    "Dcy: " + envdcyDebug.substr(0, 4) +
                                     "Sample Rate: " + samplerateDebug.substr(0, 5) + "\n" +
                                     "Length: " + samplelengthDebug;
 
