@@ -37,9 +37,7 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     randomizeSampleGroup.setButtonText("Randomize Sample");
     randomizeSampleGroup.onClick = [this]
     {
-        audioProcessor.randomizeSample();
-        audioProcessor.randomizePitch();
-        audioProcessor.randomizeADSR();
+        audioProcessor.randomizeSampleGroup();
 
         sampleDebugText.setText(audioProcessor.sampleDebug());
         repaint(0, 0, getWidth(), getHeight());
@@ -50,11 +48,7 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     randomizeVibratoGroup.setButtonText("Randomize Vibrato");
     randomizeVibratoGroup.onClick = [this]
     {
-        audioProcessor.randomizeVibRate();
-        audioProcessor.randomizeVibDutyCycle();
-        audioProcessor.randomizeVibShape();
-        audioProcessor.randomizeVibDepth();
-        audioProcessor.randomizeVibDelay();
+        audioProcessor.randomizeVibratoGroup();
 
         vibDebugText.setText(audioProcessor.vibDebug());
         repaint(0, 0, getWidth(), getHeight());
@@ -65,11 +59,7 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     randomizePitchEnvGroup.setButtonText("Randomize Pitch Env");
     randomizePitchEnvGroup.onClick = [this]
     {
-        audioProcessor.randomizePitchEnvAttack();
-        audioProcessor.randomizePitchEnvDecay();
-        audioProcessor.randomizePitchEnvSustain();
-        audioProcessor.randomizePitchEnvDepth();
-        audioProcessor.randomizePitchEnvDelay();
+        audioProcessor.randomizePitchEnvGroup();
 
         pitchenvDebugText.setText(audioProcessor.pitchenvDebug());
         repaint(0, 0, getWidth(), getHeight());

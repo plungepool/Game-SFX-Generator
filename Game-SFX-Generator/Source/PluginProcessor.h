@@ -66,19 +66,27 @@ public:
     //Faust Setters
     void setGate(bool gate);
 
+    void randomizeSampleGroup();
     void randomizeSample();
     void randomizePitch();
     void randomizeADSR();
 
+    void randomizeVibratoGroup();
+    void randomizeVibRateEnvAttack();
+    void randomizeVibRateEnvDecay();
+    void randomizeVibRateEnvSustain();
+    void randomizeVibRateEnvDepth();
     void randomizeVibRate();
     void randomizeVibDutyCycle();
     void randomizeVibShape();
     void randomizeVibDepth();
     void randomizeVibDelay();
 
+    void randomizePitchEnvGroup();
     void randomizePitchEnvAttack();
     void randomizePitchEnvDecay();
     void randomizePitchEnvSustain();
+    void randomizePitchEnvGateSource();
     void randomizePitchEnvDepth();
     void randomizePitchEnvDelay();
 
