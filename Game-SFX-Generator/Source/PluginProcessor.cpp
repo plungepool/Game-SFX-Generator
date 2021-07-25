@@ -233,6 +233,9 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
             std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
             transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
             readerSource.reset(tempSource.release());
+            setGate(false);
+            setPlayback(false);
+            GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         }
     }
 }
