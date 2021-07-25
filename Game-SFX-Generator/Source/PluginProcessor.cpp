@@ -390,6 +390,12 @@ void GameSFXGeneratorAudioProcessor::randomizeVibDutyCycle()
 
 void GameSFXGeneratorAudioProcessor::randomizeVibShape()
 {
+    int minSubset = 0;
+    int maxSubset = 3;
+    float randomizedValueSubset = randomInt(minSubset, maxSubset);
+    fUI->setParamValue("Vib_LFOShape_Sync", randomizedValueSubset);
+    fUI->setParamValue("Vib_LFOShape_Unsync", randomizedValueSubset);
+
     int min = 0;
     int max = 2;
     float randomizedValue = randomInt(min, max);
@@ -453,7 +459,7 @@ void GameSFXGeneratorAudioProcessor::randomizePitchEnvSustain()
 void GameSFXGeneratorAudioProcessor::randomizePitchEnvGateSource()
 {
     int min = 0;
-    int max = 1;
+    int max = 2;
     float randomizedValue = randomInt(min, max);
     fUI->setParamValue("PitchEnv_AdsrGate", randomizedValue);
 }
@@ -505,7 +511,8 @@ std::string GameSFXGeneratorAudioProcessor::vibDebug()
 {
     std::string vibrateDebug = std::to_string(fUI->getParamValue("Vib_Freq"));
     std::string vibdutyDebug = std::to_string(fUI->getParamValue("Vib_Duty"));
-    std::string vibshapeDebug = std::to_string(fUI->getParamValue("Vib_LFOShape"));
+    std::string vibshapeDebug = (std::to_string(fUI->getParamValue("Vib_LFOShape"))).substr(0, 1) + "." +
+                                (std::to_string(fUI->getParamValue("Vib_LFOShape_Sync"))).substr(0, 1);
     std::string vibdepthDebug = std::to_string(fUI->getParamValue("Vib_Depth"));
     std::string vibdelayDebug = std::to_string(fUI->getParamValue("Vib_Delay") / getSampleRate());
     std::string ratemodDebug =  (std::to_string(fUI->getParamValue("VibRateEnv_Attack"))).substr(0, 3) + "s/" +
@@ -515,7 +522,7 @@ std::string GameSFXGeneratorAudioProcessor::vibDebug()
 
     std::string vibDebugText =  "Rate: " + vibrateDebug.substr(0,4) + " hz\n" +
                                 "Duty: " + vibdutyDebug.substr(0, 4) + "%\n" +
-                                "Shape: " + vibshapeDebug.substr(0, 1) + "\n" +
+                                "Shape: " + vibshapeDebug + "\n" +
                                 "Depth: " + vibdepthDebug.substr(0, 4) + "\n" +
                                 "Delay: " + vibdelayDebug.substr(0, 4) + " sec\n"
                                 "RateMod: " + ratemodDebug + "\n";
