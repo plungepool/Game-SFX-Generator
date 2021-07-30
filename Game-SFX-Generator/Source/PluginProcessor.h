@@ -60,8 +60,8 @@ public:
     //==============================================================================
     void loadFilePrompt();
     void setPlayback(bool gate);
-    void disablePlaybackButtonIfEnvelopeClosed();
-    void disablePlaybackButtonIfStreamFinished();
+    void disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer);
+    void disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer);
 
     //Faust Setters
     void setGate(bool gate);

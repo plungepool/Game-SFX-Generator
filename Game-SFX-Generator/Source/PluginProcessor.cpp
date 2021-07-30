@@ -181,8 +181,8 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
         }
     }
 
-    disablePlaybackButtonIfEnvelopeClosed();
-    disablePlaybackButtonIfStreamFinished();
+    disablePlaybackButtonIfEnvelopeClosed(buffer);
+    disablePlaybackButtonIfStreamFinished(buffer);
 }
 
 //==============================================================================
@@ -233,8 +233,8 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
             std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
             transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
             readerSource.reset(tempSource.release());
-            setPlayback(false);
             setGate(false);
+            setPlayback(false);
             GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         }
     }
@@ -251,13 +251,14 @@ void GameSFXGeneratorAudioProcessor::setPlayback(bool gate)
     }
 }
 
-void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed() {
+void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer) {
     double atkTime = fUI->getParamValue("Env_Attack");
     double dcyTime = fUI->getParamValue("Env_Decay");
     if (transportSource.getCurrentPosition() >= (atkTime + dcyTime)) {
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
-        setPlayback(false);
+        buffer.clear();
         setGate(false);
+        setPlayback(false);
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
     }
@@ -266,11 +267,12 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed() {
     }
 }
 
-void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished() {
+void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer) {
     if (transportSource.hasStreamFinished()) {
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
-        setPlayback(false);
+        buffer.clear();
         setGate(false);
+        setPlayback(false);
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
     }
