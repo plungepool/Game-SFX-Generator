@@ -29,7 +29,7 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     playbackButton.onClick = [this] 
     { 
         audioProcessor.setPlayback(playbackButton.getToggleState());
-        audioProcessor.setGate(playbackButton.getToggleState()); 
+        audioProcessor.setGate(playbackButton.getToggleState());
     };
     addAndMakeVisible(playbackButton);
 
@@ -106,4 +106,13 @@ void GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(bool state) {
 
 bool GameSFXGeneratorAudioProcessorEditor::getPlaybackToggleState() {
     return playbackButton.getToggleState();
+}
+
+void GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(bool state) {
+    if (state) {
+        playbackButton.setEnabled(true);
+    }
+    else {
+        playbackButton.setEnabled(false);
+    }
 }

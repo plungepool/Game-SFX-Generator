@@ -26,6 +26,7 @@ public:
 
     void static setPlaybackToggle(bool state);
     bool getPlaybackToggleState();
+    void static enablePlaybackButton(bool state);
 
 private:
     juce::TextButton loadFileButton;

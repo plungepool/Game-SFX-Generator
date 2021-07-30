@@ -233,8 +233,8 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
             std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
             transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
             readerSource.reset(tempSource.release());
-            setGate(false);
             setPlayback(false);
+            setGate(false);
             GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         }
     }
@@ -255,9 +255,11 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed() {
     double atkTime = fUI->getParamValue("Env_Attack");
     double dcyTime = fUI->getParamValue("Env_Decay");
     if (transportSource.getCurrentPosition() >= (atkTime + dcyTime)) {
-        setGate(false);
+        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
         setPlayback(false);
+        setGate(false);
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
     }
     else {
         return;
@@ -266,9 +268,11 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed() {
 
 void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished() {
     if (transportSource.hasStreamFinished()) {
-        setGate(false);
+        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
         setPlayback(false);
+        setGate(false);
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
     }
     else {
         return;
