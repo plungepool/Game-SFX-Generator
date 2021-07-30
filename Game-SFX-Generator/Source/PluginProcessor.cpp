@@ -309,19 +309,20 @@ void GameSFXGeneratorAudioProcessor::randomizePitch()
 
 void GameSFXGeneratorAudioProcessor::randomizeADSR()
 {
-    float resAtk = 10;
+    float resAtk = 100;
     int minAtk = 0;
     int maxAtk = (transportSource.getTotalLength() / getSampleRate()) * resAtk;
     float randomizedValueAtk = randomInt(minAtk, maxAtk);
     fUI->setParamValue("Env_Attack", randomizedValueAtk / resAtk);
 
-    float resDcy = 10;
+    float resDcy = 100;
     int minDcy = 0;
-    int maxDcy = (transportSource.getTotalLength() / getSampleRate()) * resDcy;
+    int maxDcy = ((transportSource.getTotalLength() / getSampleRate()) * resDcy) - randomizedValueAtk;
     float randomizedValueDcy = randomInt(minDcy, maxDcy);
+    if (randomizedValueDcy < 1) {
+        randomizedValueDcy = 1;
+    }
     fUI->setParamValue("Env_Decay", randomizedValueDcy / resDcy);
-
-    //TODO - Decay should be <= length of sample - attack time
 }
 
 void GameSFXGeneratorAudioProcessor::randomizeVibratoGroup()
