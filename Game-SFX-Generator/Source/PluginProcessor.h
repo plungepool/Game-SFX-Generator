@@ -59,6 +59,7 @@ public:
 
     //==============================================================================
     void loadFilePrompt();
+    void getSampleFromDatabase(int id);
     void setPlayback(bool gate);
     void disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer);
     void disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer);
@@ -102,6 +103,9 @@ private:
     juce::AudioFormatManager audioFormatManager;
     std::unique_ptr <juce::AudioFormatReaderSource> readerSource;
     juce::AudioTransportSource transportSource;
+
+    //Database
+    std::string static currentFilePath;
 
     //Faust I/O
     MapUI* fUI;

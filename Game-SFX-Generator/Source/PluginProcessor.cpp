@@ -9,6 +9,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "Faust/FaustMainProcessor.h"
+#include "SQLite/sqlite3.h"
 
 //==============================================================================
 GameSFXGeneratorAudioProcessor::GameSFXGeneratorAudioProcessor()
@@ -238,6 +239,30 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
             GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         }
     }
+}
+
+void GameSFXGeneratorAudioProcessor::getSampleFromDatabase(int id) {
+    std::string id_string = "SELECT filename FROM files WHERE id = " + std::to_string(id);
+    char const* querySelectById = id_string.c_str();
+
+    sqlite3* connection = nullptr;
+    int result = sqlite3_open("C:/Users/cyclpsrock/Dropbox/Programming/Project Repos/Game-SFX-Generator/Game-SFX-Generator/Source/SQLite/audioDB/audio.db", &connection);
+    //":memory:" instead of path to create an in-memory database
+    
+    sqlite3_stmt* query = nullptr;
+    result = sqlite3_prepare_v2(connection, querySelectById, -1, &query, nullptr);
+
+    if (SQLITE_OK != result) {
+        //error handling, file not found
+    }
+
+    while (SQLITE_ROW == sqlite3_step(query)) {
+        //currentFilePath = std::to_string(*sqlite3_column_text(query, 0));
+    }
+    //this isn't quite right, it should only assign single matching result
+
+    sqlite3_finalize(query);
+    sqlite3_close(connection);
 }
 
 void GameSFXGeneratorAudioProcessor::setPlayback(bool gate) 
