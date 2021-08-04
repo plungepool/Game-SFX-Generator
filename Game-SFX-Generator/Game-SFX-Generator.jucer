@@ -251,10 +251,6 @@
         <FILE id="bHQb15" name="Wind Down.wav" compile="0" resource="1" file="Assets/Audio/Wind Down.wav"/>
       </GROUP>
     </GROUP>
-    <GROUP id="{B3546CAD-1562-7E73-59AD-2F8F1BE05EE3}" name="SQLite">
-      <FILE id="hmy4PI" name="sqlite3.c" compile="1" resource="0" file="Source/SQLite/sqlite3.c"/>
-      <FILE id="wC7v7E" name="sqlite3.h" compile="0" resource="0" file="Source/SQLite/sqlite3.h"/>
-    </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>

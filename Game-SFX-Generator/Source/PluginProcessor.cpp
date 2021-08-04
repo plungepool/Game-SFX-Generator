@@ -243,16 +243,13 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
     }
 }
 
-<<<<<<< HEAD
-void GameSFXGeneratorAudioProcessor::getNumberOfSamplesInDatabase() {
-    //COUNT query of db to find max for random number gen
+int GameSFXGeneratorAudioProcessor::getNumberOfSamplesInDatabase() {
+    //return SQL count query
+    return 1;
 }
 
 std::string GameSFXGeneratorAudioProcessor::getSampleNameFromDatabaseById(int id) {
     std::string currentFilePath;
-=======
-void GameSFXGeneratorAudioProcessor::getSampleFromDatabase(int id) {
->>>>>>> 82ce97f1202a51548a6986a0d95dcb2a6fdfe80d
     std::string id_string = "SELECT filename FROM files WHERE id = " + std::to_string(id);
     char const* querySelectById = id_string.c_str();
 
@@ -264,7 +261,6 @@ void GameSFXGeneratorAudioProcessor::getSampleFromDatabase(int id) {
     result = sqlite3_prepare_v2(connection, querySelectById, -1, &query, nullptr);
 
     if (SQLITE_OK != result) {
-<<<<<<< HEAD
         //error handling
     }
 
@@ -279,20 +275,6 @@ void GameSFXGeneratorAudioProcessor::getSampleFromDatabase(int id) {
 }
 
 //Playback
-=======
-        //error handling, file not found
-    }
-
-    while (SQLITE_ROW == sqlite3_step(query)) {
-        //currentFilePath = std::to_string(*sqlite3_column_text(query, 0));
-    }
-    //this isn't quite right, it should only assign single matching result
-
-    sqlite3_finalize(query);
-    sqlite3_close(connection);
-}
-
->>>>>>> 82ce97f1202a51548a6986a0d95dcb2a6fdfe80d
 void GameSFXGeneratorAudioProcessor::setPlayback(bool gate) 
 {
     if (gate) {
@@ -357,6 +339,7 @@ void GameSFXGeneratorAudioProcessor::randomizeSample()
     //randomizing code
     //TODO
     int min = 1;
+    int max = getNumberOfSamplesInDatabase();
 
     //get sample from binary resources
     char const* binarySampleName = getSampleNameFromDatabaseById(50).c_str();
@@ -573,7 +556,7 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     std::string samplerateDebug = std::to_string(getSampleRate());
     std::string samplelengthDebug = std::to_string(transportSource.getTotalLength());
 
-    std::string sampleDebugText = getSampleNameFromDatabaseById(50) + "\n" +
+    std::string sampleDebugText = getSampleNameFromDatabaseById(1) + "\n" +
                                     "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
                                     "Atk: " + envatkDebug.substr(0, 4) + " sec\n" +
                                     "Dcy: " + envdcyDebug.substr(0, 4) + " sec\n" +

@@ -60,14 +60,10 @@ public:
     //==============================================================================
     //Files
     void loadFilePrompt();
-<<<<<<< HEAD
-    void getNumberOfSamplesInDatabase();
+    int getNumberOfSamplesInDatabase();
     std::string getSampleNameFromDatabaseById(int id);
 
     //Playback
-=======
-    void getSampleFromDatabase(int id);
->>>>>>> 82ce97f1202a51548a6986a0d95dcb2a6fdfe80d
     void setPlayback(bool gate);
     void disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer);
     void disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer);
