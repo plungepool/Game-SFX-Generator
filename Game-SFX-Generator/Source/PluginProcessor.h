@@ -60,8 +60,9 @@ public:
     //==============================================================================
     //Files
     void loadFilePrompt();
-    int getNumberOfSamplesInDatabase();
+    //int getNumberOfRowsInDatabase();
     std::string getSampleNameFromDatabaseById(int id);
+    int randomizedSampleId;
 
     //Playback
     void setPlayback(bool gate);
@@ -106,11 +107,9 @@ public:
 private:
     //Audio I/O
     juce::AudioFormatManager audioFormatManager;
+    juce::WavAudioFormat wavFormat;
     std::unique_ptr <juce::AudioFormatReaderSource> readerSource;
     juce::AudioTransportSource transportSource;
-
-    //Database
-    std::string static currentFilePath;
 
     //Faust I/O
     MapUI* fUI;

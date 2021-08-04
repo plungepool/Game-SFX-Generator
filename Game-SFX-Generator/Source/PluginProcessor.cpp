@@ -243,10 +243,31 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
     }
 }
 
-int GameSFXGeneratorAudioProcessor::getNumberOfSamplesInDatabase() {
-    //return SQL count query
-    return 1;
-}
+//int GameSFXGeneratorAudioProcessor::getNumberOfRowsInDatabase() {
+//    int totalFiles;
+//    std::string id_string = "SELECT COUNT(*) FROM files";
+//    char const* queryCountTotalFiles = id_string.c_str();
+//
+//    sqlite3* connection = nullptr;
+//    int result = sqlite3_open("C:/Users/cyclpsrock/Dropbox/Programming/Project Repos/Game-SFX-Generator/Game-SFX-Generator/Source/SQLite/audioDB/audio.db", &connection);
+//    //":memory:" instead of path to create an in-memory database
+//
+//    sqlite3_stmt* query = nullptr;
+//    result = sqlite3_prepare_v2(connection, queryCountTotalFiles, -1, &query, nullptr);
+//
+//    if (SQLITE_OK != result) {
+//        //error handling
+//    }
+//
+//    while (SQLITE_ROW == sqlite3_step(query)) {
+//        totalFiles = sqlite3_column_int(query, 0);
+//    }
+//
+//    sqlite3_finalize(query);
+//    sqlite3_close(connection);
+//
+//    return totalFiles;
+//}
 
 std::string GameSFXGeneratorAudioProcessor::getSampleNameFromDatabaseById(int id) {
     std::string currentFilePath;
@@ -337,19 +358,27 @@ void GameSFXGeneratorAudioProcessor::randomizeSampleGroup()
 void GameSFXGeneratorAudioProcessor::randomizeSample()
 {
     //randomizing code
-    //TODO
     int min = 1;
-    int max = getNumberOfSamplesInDatabase();
+    int max = BinaryData::namedResourceListSize;
+    randomizedSampleId = randomInt(min, max);
 
     //get sample from binary resources
-    char const* binarySampleName = getSampleNameFromDatabaseById(50).c_str();
-    int dataSize;
-    auto* binarySample = BinaryData::getNamedResource(binarySampleName, dataSize);
+    int dataSize = 0;
+    char const* binarySample = BinaryData::getNamedResource(BinaryData::namedResourceList[randomizedSampleId], dataSize);
 
-    //fileDebug = binarySampleName;
+    //create reader
+    juce::MemoryInputStream* inputStream = new juce::MemoryInputStream(binarySample, dataSize, false);
+    juce::AudioFormatReader* audioReader = wavFormat.createReaderFor(inputStream, true);
 
     //assign data to playback buffer
-    //Need this to test if database works
+    if (audioReader != nullptr) {
+        std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
+        transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
+        readerSource.reset(tempSource.release());
+        setGate(false);
+        setPlayback(false);
+        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+    }
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitch()
@@ -556,7 +585,8 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     std::string samplerateDebug = std::to_string(getSampleRate());
     std::string samplelengthDebug = std::to_string(transportSource.getTotalLength());
 
-    std::string sampleDebugText = getSampleNameFromDatabaseById(1) + "\n" +
+    std::string sampleDebugText =   getSampleNameFromDatabaseById(randomizedSampleId + 1) + "\n" +
+                                    "# of samples: " + std::to_string(BinaryData::namedResourceListSize) + "\n" +     
                                     "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
                                     "Atk: " + envatkDebug.substr(0, 4) + " sec\n" +
                                     "Dcy: " + envdcyDebug.substr(0, 4) + " sec\n" +
