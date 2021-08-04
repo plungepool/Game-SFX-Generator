@@ -16,10 +16,6 @@
         <FILE id="LABFZH" name="FaustMainProcessor.h" compile="0" resource="0"
               file="Source/Faust/FaustMainProcessor.h"/>
       </GROUP>
-      <GROUP id="{B3546CAD-1562-7E73-59AD-2F8F1BE05EE3}" name="SQLite">
-        <FILE id="hmy4PI" name="sqlite3.c" compile="1" resource="0" file="Source/SQLite/sqlite3.c"/>
-        <FILE id="wC7v7E" name="sqlite3.h" compile="0" resource="0" file="Source/SQLite/sqlite3.h"/>
-      </GROUP>
     </GROUP>
     <GROUP id="{DC7CE890-A775-A96C-DA17-279F7AE0DD77}" name="Assets">
       <GROUP id="{5CA0F974-1A54-9EE8-29DD-FBC0D7991AAD}" name="Audio">

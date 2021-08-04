@@ -17,7 +17,11 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     loadFileButton.onClick = [this] 
     {
         audioProcessor.loadFilePrompt();
-        audioProcessor.randomizeAll();
+        audioProcessor.randomizePitch();
+        audioProcessor.randomizeADSR();
+        audioProcessor.randomizePitchEnvGroup();
+        audioProcessor.randomizeVibratoGroup();
+        audioProcessor.randomizedSampleId = NULL;
         sampleDebugText.setText(audioProcessor.sampleDebug());
         vibDebugText.setText(audioProcessor.vibDebug());
         pitchenvDebugText.setText(audioProcessor.pitchenvDebug());

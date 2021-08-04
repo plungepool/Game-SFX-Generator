@@ -9,7 +9,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "Faust/FaustMainProcessor.h"
-//#include "SQLite/sqlite3.h"
 
 //==============================================================================
 GameSFXGeneratorAudioProcessor::GameSFXGeneratorAudioProcessor()
