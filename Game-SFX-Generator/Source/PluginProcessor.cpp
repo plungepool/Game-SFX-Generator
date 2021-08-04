@@ -219,6 +219,8 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 }
 
 //==============================================================================
+
+//Files
 void GameSFXGeneratorAudioProcessor::loadFilePrompt() 
 {
     juce::FileChooser fileChooser("Choose a .wav file", 
@@ -241,7 +243,16 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
     }
 }
 
+<<<<<<< HEAD
+void GameSFXGeneratorAudioProcessor::getNumberOfSamplesInDatabase() {
+    //COUNT query of db to find max for random number gen
+}
+
+std::string GameSFXGeneratorAudioProcessor::getSampleNameFromDatabaseById(int id) {
+    std::string currentFilePath;
+=======
 void GameSFXGeneratorAudioProcessor::getSampleFromDatabase(int id) {
+>>>>>>> 82ce97f1202a51548a6986a0d95dcb2a6fdfe80d
     std::string id_string = "SELECT filename FROM files WHERE id = " + std::to_string(id);
     char const* querySelectById = id_string.c_str();
 
@@ -253,6 +264,22 @@ void GameSFXGeneratorAudioProcessor::getSampleFromDatabase(int id) {
     result = sqlite3_prepare_v2(connection, querySelectById, -1, &query, nullptr);
 
     if (SQLITE_OK != result) {
+<<<<<<< HEAD
+        //error handling
+    }
+
+    while (SQLITE_ROW == sqlite3_step(query)) {
+        currentFilePath = std::string(reinterpret_cast<const char*>(sqlite3_column_text(query, 0)));
+    }
+
+    sqlite3_finalize(query);
+    sqlite3_close(connection);
+
+    return currentFilePath;
+}
+
+//Playback
+=======
         //error handling, file not found
     }
 
@@ -265,6 +292,7 @@ void GameSFXGeneratorAudioProcessor::getSampleFromDatabase(int id) {
     sqlite3_close(connection);
 }
 
+>>>>>>> 82ce97f1202a51548a6986a0d95dcb2a6fdfe80d
 void GameSFXGeneratorAudioProcessor::setPlayback(bool gate) 
 {
     if (gate) {
@@ -326,7 +354,19 @@ void GameSFXGeneratorAudioProcessor::randomizeSampleGroup()
 
 void GameSFXGeneratorAudioProcessor::randomizeSample()
 {
-    ; //TODO
+    //randomizing code
+    //TODO
+    int min = 1;
+
+    //get sample from binary resources
+    char const* binarySampleName = getSampleNameFromDatabaseById(50).c_str();
+    int dataSize;
+    auto* binarySample = BinaryData::getNamedResource(binarySampleName, dataSize);
+
+    //fileDebug = binarySampleName;
+
+    //assign data to playback buffer
+    //Need this to test if database works
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitch()
@@ -533,7 +573,8 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     std::string samplerateDebug = std::to_string(getSampleRate());
     std::string samplelengthDebug = std::to_string(transportSource.getTotalLength());
 
-    std::string sampleDebugText =   "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
+    std::string sampleDebugText = getSampleNameFromDatabaseById(50) + "\n" +
+                                    "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
                                     "Atk: " + envatkDebug.substr(0, 4) + " sec\n" +
                                     "Dcy: " + envdcyDebug.substr(0, 4) + " sec\n" +
                                     "Sample Rate: " + samplerateDebug.substr(0, 5) + "\n" +

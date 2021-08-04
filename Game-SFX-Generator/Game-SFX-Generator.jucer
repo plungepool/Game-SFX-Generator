@@ -16,6 +16,240 @@
         <FILE id="LABFZH" name="FaustMainProcessor.h" compile="0" resource="0"
               file="Source/Faust/FaustMainProcessor.h"/>
       </GROUP>
+      <GROUP id="{B3546CAD-1562-7E73-59AD-2F8F1BE05EE3}" name="SQLite">
+        <FILE id="hmy4PI" name="sqlite3.c" compile="1" resource="0" file="Source/SQLite/sqlite3.c"/>
+        <FILE id="wC7v7E" name="sqlite3.h" compile="0" resource="0" file="Source/SQLite/sqlite3.h"/>
+      </GROUP>
+    </GROUP>
+    <GROUP id="{DC7CE890-A775-A96C-DA17-279F7AE0DD77}" name="Assets">
+      <GROUP id="{DF766CDB-A9B2-1CF2-0884-CB596B2ABD17}" name="Audio">
+        <FILE id="T9qhNZ" name="18 - CHORUS.wav" compile="0" resource="1" file="Assets/Audio/18 - CHORUS.wav"/>
+        <FILE id="BoPz6H" name="2600 Kick 1.wav" compile="0" resource="1" file="Assets/Audio/2600 Kick 1.wav"/>
+        <FILE id="Meg6U4" name="Aud Wall 1 C3.wav" compile="0" resource="1"
+              file="Assets/Audio/Aud Wall 1 C3.wav"/>
+        <FILE id="EPoNWW" name="basic_sine.wav" compile="0" resource="1" file="Assets/Audio/basic_sine.wav"/>
+        <FILE id="QyeJ17" name="CA-100 BassonB.wav" compile="0" resource="1"
+              file="Assets/Audio/CA-100 BassonB.wav"/>
+        <FILE id="iRehge" name="CA-100 Pluck C.wav" compile="0" resource="1"
+              file="Assets/Audio/CA-100 Pluck C.wav"/>
+        <FILE id="oWiys4" name="CA-100 Sine Blop B.wav" compile="0" resource="1"
+              file="Assets/Audio/CA-100 Sine Blop B.wav"/>
+        <FILE id="vYlqrY" name="CA-100 VIBES A.wav" compile="0" resource="1"
+              file="Assets/Audio/CA-100 VIBES A.wav"/>
+        <FILE id="oOxWMX" name="CA-100_1B.wav" compile="0" resource="1" file="Assets/Audio/CA-100_1B.wav"/>
+        <FILE id="cSnwUQ" name="chaos_blackholematron.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_blackholematron.wav"/>
+        <FILE id="GeZJR7" name="chaos_creecher.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_creecher.wav"/>
+        <FILE id="PBoB0J" name="chaos_disapparate.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_disapparate.wav"/>
+        <FILE id="UWWnPV" name="chaos_fleshfloor.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_fleshfloor.wav"/>
+        <FILE id="me9mWA" name="chaos_meatdimension.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_meatdimension.wav"/>
+        <FILE id="t0HVkE" name="chaos_noiserise.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_noiserise.wav"/>
+        <FILE id="b59mIS" name="chaos_radiotower.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_radiotower.wav"/>
+        <FILE id="a9j6wp" name="chaos_revcat.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_revcat.wav"/>
+        <FILE id="saXxnL" name="chaos_reversenoise.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_reversenoise.wav"/>
+        <FILE id="L1byhk" name="chaos_susumulow.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_susumulow.wav"/>
+        <FILE id="XG86zS" name="chaos_tunnelrunner.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_tunnelrunner.wav"/>
+        <FILE id="CDGtjS" name="chaos_whitenoise.wav" compile="0" resource="1"
+              file="Assets/Audio/chaos_whitenoise.wav"/>
+        <FILE id="WxcoWl" name="chaos_zleep.wav" compile="0" resource="1" file="Assets/Audio/chaos_zleep.wav"/>
+        <FILE id="SSSLSH" name="Chromatic Wood C4.wav" compile="0" resource="1"
+              file="Assets/Audio/Chromatic Wood C4.wav"/>
+        <FILE id="p16e4J" name="Dempa Bells C4.wav" compile="0" resource="1"
+              file="Assets/Audio/Dempa Bells C4.wav"/>
+        <FILE id="Hc0nDO" name="DX21 Guitar G3.wav" compile="0" resource="1"
+              file="Assets/Audio/DX21 Guitar G3.wav"/>
+        <FILE id="WyY1c9" name="FM Chime.wav" compile="0" resource="1" file="Assets/Audio/FM Chime.wav"/>
+        <FILE id="bfITar" name="FM NOISE C2.wav" compile="0" resource="1" file="Assets/Audio/FM NOISE C2.wav"/>
+        <FILE id="u8MEgg" name="FOREST_SYNTH_RAW_C4.wav" compile="0" resource="1"
+              file="Assets/Audio/FOREST_SYNTH_RAW_C4.wav"/>
+        <FILE id="KY0yDk" name="FourPostsSine_4.wav" compile="0" resource="1"
+              file="Assets/Audio/FourPostsSine_4.wav"/>
+        <FILE id="FdNB7Q" name="g_note_lowvib.wav" compile="0" resource="1"
+              file="Assets/Audio/g_note_lowvib.wav"/>
+        <FILE id="DcU7BQ" name="g_note_select.wav" compile="0" resource="1"
+              file="Assets/Audio/g_note_select.wav"/>
+        <FILE id="W1lceR" name="Green Garden.wav" compile="0" resource="1"
+              file="Assets/Audio/Green Garden.wav"/>
+        <FILE id="SGHDIG" name="gt_chord_drone2.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_drone2.wav"/>
+        <FILE id="HmNXsX" name="gt_chord_ether.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_ether.wav"/>
+        <FILE id="tBkrRs" name="gt_chord_harm.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_harm.wav"/>
+        <FILE id="iSrbml" name="gt_chord_maj7.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_maj7.wav"/>
+        <FILE id="G2KaCX" name="gt_chord_modulati.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_modulati.wav"/>
+        <FILE id="eKYSoF" name="gt_chord_mute.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_mute.wav"/>
+        <FILE id="Vdzc02" name="gt_chord_mystery.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_mystery.wav"/>
+        <FILE id="VmOvaG" name="gt_chord_reverse1.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_reverse1.wav"/>
+        <FILE id="rdTUZo" name="gt_chord_slowbuild.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_chord_slowbuild.wav"/>
+        <FILE id="tpz8TH" name="gt_harm.wav" compile="0" resource="1" file="Assets/Audio/gt_harm.wav"/>
+        <FILE id="NkD9lz" name="gt_harm_2note.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_harm_2note.wav"/>
+        <FILE id="c4tolD" name="gt_harm2.wav" compile="0" resource="1" file="Assets/Audio/gt_harm2.wav"/>
+        <FILE id="SdX7TZ" name="gt_harm3.wav" compile="0" resource="1" file="Assets/Audio/gt_harm3.wav"/>
+        <FILE id="QwIaGD" name="gt_note_downpitched.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_downpitched.wav"/>
+        <FILE id="TfvE54" name="gt_note_drone1.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_drone1.wav"/>
+        <FILE id="o9vZao" name="gt_note_echo.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_echo.wav"/>
+        <FILE id="H74gZY" name="gt_note_echoharm.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_echoharm.wav"/>
+        <FILE id="FyJ301" name="gt_note_goodmorning.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_goodmorning.wav"/>
+        <FILE id="Uk1qrd" name="gt_note_modulati2.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_modulati2.wav"/>
+        <FILE id="gsvgn2" name="gt_note_reverseecho.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_reverseecho.wav"/>
+        <FILE id="CvdrHq" name="gt_note_slideUp.wav" compile="0" resource="1"
+              file="Assets/Audio/gt_note_slideUp.wav"/>
+        <FILE id="ISAT1F" name="gt_ping.wav" compile="0" resource="1" file="Assets/Audio/gt_ping.wav"/>
+        <FILE id="CptVAF" name="Guiro Roll.wav" compile="0" resource="1" file="Assets/Audio/Guiro Roll.wav"/>
+        <FILE id="EJc7un" name="Guitar Wah Loop2.wav" compile="0" resource="1"
+              file="Assets/Audio/Guitar Wah Loop2.wav"/>
+        <FILE id="oVWcqH" name="Hard Finger A#0.wav" compile="0" resource="1"
+              file="Assets/Audio/Hard Finger A#0.wav"/>
+        <FILE id="PnOjRw" name="Junky_Gunstarlike_1.wav" compile="0" resource="1"
+              file="Assets/Audio/Junky_Gunstarlike_1.wav"/>
+        <FILE id="u3Vu3X" name="Kartoon.wav" compile="0" resource="1" file="Assets/Audio/Kartoon.wav"/>
+        <FILE id="hMoFxU" name="Lonely Piano C4.wav" compile="0" resource="1"
+              file="Assets/Audio/Lonely Piano C4.wav"/>
+        <FILE id="vNVVjz" name="Mario Sounding Shit Horn C4.wav" compile="0"
+              resource="1" file="Assets/Audio/Mario Sounding Shit Horn C4.wav"/>
+        <FILE id="Jy7jBw" name="MarsiPad_C3.wav" compile="0" resource="1" file="Assets/Audio/MarsiPad_C3.wav"/>
+        <FILE id="xONIP3" name="MICROKORG_ARPSOUND_RAW_C4.wav" compile="0"
+              resource="1" file="Assets/Audio/MICROKORG_ARPSOUND_RAW_C4.wav"/>
+        <FILE id="EanmRx" name="MicroWhurr_C2.wav" compile="0" resource="1"
+              file="Assets/Audio/MicroWhurr_C2.wav"/>
+        <FILE id="x5izej" name="MicroWhurr_C5.wav" compile="0" resource="1"
+              file="Assets/Audio/MicroWhurr_C5.wav"/>
+        <FILE id="HSk7YE" name="Org Hit.wav" compile="0" resource="1" file="Assets/Audio/Org Hit.wav"/>
+        <FILE id="aEbGF5" name="org_buptsi.wav" compile="0" resource="1" file="Assets/Audio/org_buptsi.wav"/>
+        <FILE id="vINKeo" name="org_creature.wav" compile="0" resource="1"
+              file="Assets/Audio/org_creature.wav"/>
+        <FILE id="lDyWeT" name="org_mutsu.wav" compile="0" resource="1" file="Assets/Audio/org_mutsu.wav"/>
+        <FILE id="QndyiK" name="Pizzicato C4.wav" compile="0" resource="1"
+              file="Assets/Audio/Pizzicato C4.wav"/>
+        <FILE id="oTvruY" name="prime_C4.wav" compile="0" resource="1" file="Assets/Audio/prime_C4.wav"/>
+        <FILE id="RgWXgW" name="Pulse Bell C5.wav" compile="0" resource="1"
+              file="Assets/Audio/Pulse Bell C5.wav"/>
+        <FILE id="ktrZxL" name="quick1.wav" compile="0" resource="1" file="Assets/Audio/quick1.wav"/>
+        <FILE id="oG0oXO" name="quick2.wav" compile="0" resource="1" file="Assets/Audio/quick2.wav"/>
+        <FILE id="TqDxcM" name="rawC3.wav" compile="0" resource="1" file="Assets/Audio/rawC3.wav"/>
+        <FILE id="WFqW4I" name="samp_barber.wav" compile="0" resource="1" file="Assets/Audio/samp_barber.wav"/>
+        <FILE id="S3eGge" name="samp_bit.wav" compile="0" resource="1" file="Assets/Audio/samp_bit.wav"/>
+        <FILE id="on6GCl" name="samp_church.wav" compile="0" resource="1" file="Assets/Audio/samp_church.wav"/>
+        <FILE id="UXGs33" name="samp_copiedgwyn.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_copiedgwyn.wav"/>
+        <FILE id="jY8M4b" name="samp_famisnare.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_famisnare.wav"/>
+        <FILE id="PDzwLy" name="samp_gt_acoustic.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_gt_acoustic.wav"/>
+        <FILE id="OnK3dV" name="samp_guitar_bossa.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_guitar_bossa.wav"/>
+        <FILE id="XShCVK" name="samp_kidney.wav" compile="0" resource="1" file="Assets/Audio/samp_kidney.wav"/>
+        <FILE id="G7DXh5" name="samp_late.wav" compile="0" resource="1" file="Assets/Audio/samp_late.wav"/>
+        <FILE id="X8aW9e" name="samp_lcik.wav" compile="0" resource="1" file="Assets/Audio/samp_lcik.wav"/>
+        <FILE id="kfzleA" name="samp_malletUI.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_malletUI.wav"/>
+        <FILE id="dvf3at" name="samp_noisepop.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_noisepop.wav"/>
+        <FILE id="CjzhgZ" name="samp_org_paper.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_org_paper.wav"/>
+        <FILE id="SW1gGx" name="samp_rev_pianoshimmer.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_rev_pianoshimmer.wav"/>
+        <FILE id="aZCF5w" name="samp_scramble.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_scramble.wav"/>
+        <FILE id="zsVPS4" name="samp_stutter_piano.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_stutter_piano.wav"/>
+        <FILE id="V0piOb" name="samp_timestop.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_timestop.wav"/>
+        <FILE id="MGDKaX" name="samp_ui_sine.wav" compile="0" resource="1"
+              file="Assets/Audio/samp_ui_sine.wav"/>
+        <FILE id="j1gE0J" name="samp_whop.wav" compile="0" resource="1" file="Assets/Audio/samp_whop.wav"/>
+        <FILE id="Li8Fkt" name="Sample 7.wav" compile="0" resource="1" file="Assets/Audio/Sample 7.wav"/>
+        <FILE id="o9ideZ" name="Sample 21.wav" compile="0" resource="1" file="Assets/Audio/Sample 21.wav"/>
+        <FILE id="kSvrvM" name="Sample 30.wav" compile="0" resource="1" file="Assets/Audio/Sample 30.wav"/>
+        <FILE id="v5gE8q" name="sample_clink.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_clink.wav"/>
+        <FILE id="Y0R74o" name="sample_delicate.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_delicate.wav"/>
+        <FILE id="LnvtXf" name="sample_dreamcruft.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_dreamcruft.wav"/>
+        <FILE id="KKHx5R" name="sample_mello_clustermoto.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_mello_clustermoto.wav"/>
+        <FILE id="RoTmBC" name="sample_mello_tune.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_mello_tune.wav"/>
+        <FILE id="Y4nsHR" name="sample_mello3.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_mello3.wav"/>
+        <FILE id="zEbKtP" name="sample_musicbox.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_musicbox.wav"/>
+        <FILE id="kAHFaD" name="sample_plunkUI.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_plunkUI.wav"/>
+        <FILE id="grA1Sl" name="sample_remember.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_remember.wav"/>
+        <FILE id="IYKuHb" name="sample_rhrhg.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_rhrhg.wav"/>
+        <FILE id="Fk798n" name="sample_shishishuete.wav" compile="0" resource="1"
+              file="Assets/Audio/sample_shishishuete.wav"/>
+        <FILE id="OsoX60" name="SereneCore_C3.wav" compile="0" resource="1"
+              file="Assets/Audio/SereneCore_C3.wav"/>
+        <FILE id="gXVYnY" name="Siren Loop.wav" compile="0" resource="1" file="Assets/Audio/Siren Loop.wav"/>
+        <FILE id="qAHpkk" name="synth_apparate.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_apparate.wav"/>
+        <FILE id="X3BRJE" name="synth_bleepy.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_bleepy.wav"/>
+        <FILE id="lm3KIk" name="synth_eve_UI.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_eve_UI.wav"/>
+        <FILE id="FGsc1X" name="synth_fm.wav" compile="0" resource="1" file="Assets/Audio/synth_fm.wav"/>
+        <FILE id="PBtMwf" name="synth_fm_single.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_fm_single.wav"/>
+        <FILE id="LFETT4" name="synth_fm_UI.wav" compile="0" resource="1" file="Assets/Audio/synth_fm_UI.wav"/>
+        <FILE id="u3fjUd" name="synth_fm_UI2.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_fm_UI2.wav"/>
+        <FILE id="NXPPQn" name="synth_fm_UI3.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_fm_UI3.wav"/>
+        <FILE id="dQXdeS" name="synth_fm_unfortunate.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_fm_unfortunate.wav"/>
+        <FILE id="P1MXbj" name="synth_fmplod.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_fmplod.wav"/>
+        <FILE id="Sj5fji" name="synth_glabber.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_glabber.wav"/>
+        <FILE id="VrWs8E" name="synth_glubber.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_glubber.wav"/>
+        <FILE id="q59igZ" name="synth_parasiteUI.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_parasiteUI.wav"/>
+        <FILE id="q433p4" name="synth_startup.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_startup.wav"/>
+        <FILE id="aLxOBM" name="synth_thump.wav" compile="0" resource="1" file="Assets/Audio/synth_thump.wav"/>
+        <FILE id="FAv1sO" name="synth_UI_classic.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_UI_classic.wav"/>
+        <FILE id="V6T1Cz" name="synth_UI_classic2.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_UI_classic2.wav"/>
+        <FILE id="UF8mX2" name="synth_waterfall.wav" compile="0" resource="1"
+              file="Assets/Audio/synth_waterfall.wav"/>
+        <FILE id="LaynmD" name="texture_smallcog.wav" compile="0" resource="1"
+              file="Assets/Audio/texture_smallcog.wav"/>
+        <FILE id="ilgNfi" name="Verbclap 909.wav" compile="0" resource="1"
+              file="Assets/Audio/Verbclap 909.wav"/>
+        <FILE id="bHQb15" name="Wind Down.wav" compile="0" resource="1" file="Assets/Audio/Wind Down.wav"/>
+      </GROUP>
     </GROUP>
     <GROUP id="{B3546CAD-1562-7E73-59AD-2F8F1BE05EE3}" name="SQLite">
       <FILE id="hmy4PI" name="sqlite3.c" compile="1" resource="0" file="Source/SQLite/sqlite3.c"/>
