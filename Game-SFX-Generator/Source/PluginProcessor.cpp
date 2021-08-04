@@ -9,7 +9,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "Faust/FaustMainProcessor.h"
-#include "SQLite/sqlite3.h"
+//#include "SQLite/sqlite3.h"
 
 //==============================================================================
 GameSFXGeneratorAudioProcessor::GameSFXGeneratorAudioProcessor()
@@ -241,58 +241,6 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
             GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         }
     }
-}
-
-//int GameSFXGeneratorAudioProcessor::getNumberOfRowsInDatabase() {
-//    int totalFiles;
-//    std::string id_string = "SELECT COUNT(*) FROM files";
-//    char const* queryCountTotalFiles = id_string.c_str();
-//
-//    sqlite3* connection = nullptr;
-//    int result = sqlite3_open("C:/Users/cyclpsrock/Dropbox/Programming/Project Repos/Game-SFX-Generator/Game-SFX-Generator/Source/SQLite/audioDB/audio.db", &connection);
-//    //":memory:" instead of path to create an in-memory database
-//
-//    sqlite3_stmt* query = nullptr;
-//    result = sqlite3_prepare_v2(connection, queryCountTotalFiles, -1, &query, nullptr);
-//
-//    if (SQLITE_OK != result) {
-//        //error handling
-//    }
-//
-//    while (SQLITE_ROW == sqlite3_step(query)) {
-//        totalFiles = sqlite3_column_int(query, 0);
-//    }
-//
-//    sqlite3_finalize(query);
-//    sqlite3_close(connection);
-//
-//    return totalFiles;
-//}
-
-std::string GameSFXGeneratorAudioProcessor::getSampleNameFromDatabaseById(int id) {
-    std::string currentFilePath;
-    std::string id_string = "SELECT filename FROM files WHERE id = " + std::to_string(id);
-    char const* querySelectById = id_string.c_str();
-
-    sqlite3* connection = nullptr;
-    int result = sqlite3_open("C:/Users/cyclpsrock/Dropbox/Programming/Project Repos/Game-SFX-Generator/Game-SFX-Generator/Source/SQLite/audioDB/audio.db", &connection);
-    //":memory:" instead of path to create an in-memory database
-    
-    sqlite3_stmt* query = nullptr;
-    result = sqlite3_prepare_v2(connection, querySelectById, -1, &query, nullptr);
-
-    if (SQLITE_OK != result) {
-        //error handling
-    }
-
-    while (SQLITE_ROW == sqlite3_step(query)) {
-        currentFilePath = std::string(reinterpret_cast<const char*>(sqlite3_column_text(query, 0)));
-    }
-
-    sqlite3_finalize(query);
-    sqlite3_close(connection);
-
-    return currentFilePath;
 }
 
 //Playback
@@ -585,7 +533,7 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     std::string samplerateDebug = std::to_string(getSampleRate());
     std::string samplelengthDebug = std::to_string(transportSource.getTotalLength());
 
-    std::string sampleDebugText =   getSampleNameFromDatabaseById(randomizedSampleId + 1) + "\n" +
+    std::string sampleDebugText = std::string(BinaryData::namedResourceList[randomizedSampleId]) + "\n" +
                                     "# of samples: " + std::to_string(BinaryData::namedResourceListSize) + "\n" +     
                                     "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
                                     "Atk: " + envatkDebug.substr(0, 4) + " sec\n" +

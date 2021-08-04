@@ -60,8 +60,6 @@ public:
     //==============================================================================
     //Files
     void loadFilePrompt();
-    //int getNumberOfRowsInDatabase();
-    std::string getSampleNameFromDatabaseById(int id);
     int randomizedSampleId;
 
     //Playback
