@@ -4,4 +4,4 @@
 
 https://user-images.githubusercontent.com/54759532/128423485-98c13ae3-899e-4d06-89a5-d9d80f0702e5.mp4
 
-### Learn more at plungepool.dev/sound-effects-generator/
+### Learn more at http://plungepool.dev/sound-effects-generator/
