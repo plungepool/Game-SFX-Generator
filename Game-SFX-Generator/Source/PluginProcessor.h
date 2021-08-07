@@ -99,6 +99,7 @@ public:
     //Debug
     std::string static fileDebug;
     std::string sampleDebug();
+    int sampleRateDebug;
     std::string vibDebug();
     std::string pitchenvDebug();
 
@@ -117,6 +118,7 @@ private:
 
     //Random Number Functions
     int randomInt(float min, float max);
+    int randomGaussian(float mean, float stdDev);
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GameSFXGeneratorAudioProcessor)

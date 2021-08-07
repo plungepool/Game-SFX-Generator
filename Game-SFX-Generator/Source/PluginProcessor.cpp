@@ -238,6 +238,7 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
             setGate(false);
             setPlayback(false);
             GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+            sampleRateDebug = getSampleRate();
         }
     }
 }
@@ -325,16 +326,48 @@ void GameSFXGeneratorAudioProcessor::randomizeSample()
         setGate(false);
         setPlayback(false);
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+        sampleRateDebug = getSampleRate();
     }
 }
 
 void GameSFXGeneratorAudioProcessor::randomizePitch()
 {
-    float res = 100;
-    int min = -48 * res;
-    int max = 48 * res;
-    float randomizedValue = randomInt(min, max);
-    fUI->setParamValue("PitchShift", randomizedValue / res);
+    int pitchStyle = randomInt(0, 2);
+
+    //Delay lines pitch shift
+    if (!pitchStyle) {
+        float res = 100;
+        int mean = 0 * res;
+        int stdDev = 15 * res;
+        float randomizedValue = randomGaussian(mean, stdDev);
+        fUI->setParamValue("PitchShift", randomizedValue / res);
+    }
+
+    //Linear interpolation/varispeed pitch shift
+    else {
+        fUI->setParamValue("PitchShift", 0);
+
+        int min = getSampleRate() / 4;
+        int max = getSampleRate() * 4;
+        if ((transportSource.getTotalLength()/getSampleRate()) < 1.0f) {
+            max = max * (transportSource.getTotalLength() / getSampleRate());
+        }
+        int randomizedValue = randomInt(min, max);
+
+        int dataSize = 0;
+        char const* binarySample = BinaryData::getNamedResource(BinaryData::namedResourceList[randomizedSampleId], dataSize);
+        juce::MemoryInputStream* inputStream = new juce::MemoryInputStream(binarySample, dataSize, false);
+        juce::AudioFormatReader* audioReader = wavFormat.createReaderFor(inputStream, true);
+        if (audioReader != nullptr) {
+            std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
+            transportSource.setSource(tempSource.get(), 0, nullptr, randomizedValue);
+            readerSource.reset(tempSource.release());
+            setGate(false);
+            setPlayback(false);
+            GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+            sampleRateDebug = randomizedValue;
+        }
+    }
 }
 
 void GameSFXGeneratorAudioProcessor::randomizeADSR()
@@ -529,7 +562,7 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     std::string pitchDebug = std::to_string(fUI->getParamValue("PitchShift"));
     std::string envatkDebug = std::to_string(fUI->getParamValue("Env_Attack"));
     std::string envdcyDebug = std::to_string(fUI->getParamValue("Env_Decay"));
-    std::string samplerateDebug = std::to_string(getSampleRate());
+    std::string samplerateDebug = std::to_string(sampleRateDebug);
     std::string samplelengthDebug = std::to_string(transportSource.getTotalLength());
 
     std::string sampleDebugText = std::string(BinaryData::namedResourceList[randomizedSampleId]) + "\n" +
@@ -591,6 +624,14 @@ int GameSFXGeneratorAudioProcessor::randomInt(float min, float max)
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_real_distribution<double> dist(min, max);
+
+    return dist(mt);
+}
+
+int GameSFXGeneratorAudioProcessor::randomGaussian(float mean, float stdDev) {
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::normal_distribution<double> dist(mean, stdDev);
 
     return dist(mt);
 }
