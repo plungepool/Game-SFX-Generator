@@ -29,11 +29,23 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     };
     addAndMakeVisible(loadFileButton);
 
+    exportFileButton.setButtonText("Export as Wav");
+    exportFileButton.onClick = [this]
+    {
+        audioProcessor.exportFilePrompt();
+    };
+    addAndMakeVisible(exportFileButton);
+
     playbackButton.setButtonText("PLAY");
     playbackButton.onClick = [this] 
     { 
         audioProcessor.setGate(playbackButton.getToggleState());
         audioProcessor.setPlayback(playbackButton.getToggleState());
+        enableLoadFileButton(!playbackButton.getToggleState());
+        enableExportButton(!playbackButton.getToggleState());
+        enableRandSampleButton(!playbackButton.getToggleState());
+        enableRandVibButton(!playbackButton.getToggleState());
+        enableRandPitchEnvButton(!playbackButton.getToggleState());
     };
     addAndMakeVisible(playbackButton);
 
@@ -90,7 +102,8 @@ void GameSFXGeneratorAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawFittedText(pitchenvDebugText.getText(), getLocalBounds(), juce::Justification::bottomRight, 1);
 
     loadFileButton.setBounds(0, 0, 100, 50);
-    playbackButton.setBounds(getWidth()-100, 25, 100, 100);
+    exportFileButton.setBounds(getWidth() - 100, 0, 100, 50);
+    playbackButton.setBounds((getWidth()/2) - 25, 25, 100, 100);
     randomizeSampleGroup.setBounds(50, 100, 100, 100);
     randomizeVibratoGroup.setBounds(150, 100, 100, 100);
     randomizePitchEnvGroup.setBounds(250, 100, 100, 100);
@@ -102,8 +115,6 @@ void GameSFXGeneratorAudioProcessorEditor::resized()
     // subcomponents in your editor..
 }
 
-juce::ToggleButton GameSFXGeneratorAudioProcessorEditor::playbackButton;
-
 void GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(bool state) {
     playbackButton.setToggleState(state, juce::dontSendNotification);
 }
@@ -112,11 +123,68 @@ bool GameSFXGeneratorAudioProcessorEditor::getPlaybackToggleState() {
     return playbackButton.getToggleState();
 }
 
+juce::TextButton GameSFXGeneratorAudioProcessorEditor::loadFileButton;
+
+void GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(bool state) {
+    if (state) {
+        loadFileButton.setEnabled(true);
+    }
+    else {
+        loadFileButton.setEnabled(false);
+    }
+}
+
+juce::ToggleButton GameSFXGeneratorAudioProcessorEditor::playbackButton;
+
 void GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(bool state) {
     if (state) {
         playbackButton.setEnabled(true);
     }
     else {
         playbackButton.setEnabled(false);
+    }
+}
+
+juce::TextButton GameSFXGeneratorAudioProcessorEditor::exportFileButton;
+
+void GameSFXGeneratorAudioProcessorEditor::enableExportButton(bool state) {
+    if (state) {
+        exportFileButton.setEnabled(true);
+    }
+    else {
+        exportFileButton.setEnabled(false);
+    }
+}
+
+juce::TextButton GameSFXGeneratorAudioProcessorEditor::randomizeSampleGroup;
+
+void GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(bool state) {
+    if (state) {
+        randomizeSampleGroup.setEnabled(true);
+    }
+    else {
+        randomizeSampleGroup.setEnabled(false);
+    }
+}
+
+juce::TextButton GameSFXGeneratorAudioProcessorEditor::randomizeVibratoGroup;
+
+void GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(bool state) {
+    if (state) {
+        randomizeVibratoGroup.setEnabled(true);
+    }
+    else {
+        randomizeVibratoGroup.setEnabled(false);
+    }
+}
+
+juce::TextButton GameSFXGeneratorAudioProcessorEditor::randomizePitchEnvGroup;
+
+void GameSFXGeneratorAudioProcessorEditor::enableRandPitchEnvButton(bool state) {
+    if (state) {
+        randomizePitchEnvGroup.setEnabled(true);
+    }
+    else {
+        randomizePitchEnvGroup.setEnabled(false);
     }
 }

@@ -26,15 +26,22 @@ public:
 
     void static setPlaybackToggle(bool state);
     bool getPlaybackToggleState();
+
+    void static enableLoadFileButton(bool state);
     void static enablePlaybackButton(bool state);
+    void static enableExportButton(bool state);
+    void static enableRandSampleButton(bool state);
+    void static enableRandVibButton(bool state);
+    void static enableRandPitchEnvButton(bool state);
 
 private:
-    juce::TextButton loadFileButton;
+    juce::TextButton static loadFileButton;
     juce::ToggleButton static playbackButton;
+    juce::TextButton static exportFileButton;
 
-    juce::TextButton randomizeSampleGroup;
-    juce::TextButton randomizeVibratoGroup;
-    juce::TextButton randomizePitchEnvGroup;
+    juce::TextButton static randomizeSampleGroup;
+    juce::TextButton static randomizeVibratoGroup;
+    juce::TextButton static randomizePitchEnvGroup;
 
     //Debug
     juce::DrawableText sampleDebugText;

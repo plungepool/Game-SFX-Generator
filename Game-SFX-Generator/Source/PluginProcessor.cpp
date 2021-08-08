@@ -122,6 +122,7 @@ void GameSFXGeneratorAudioProcessor::releaseResources()
     delete[] inputs;
     delete[] outputs;
 
+    audioWriter.release();
     transportSource.releaseResources();
 }
 
@@ -181,6 +182,12 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
         }
     }
 
+    if (exportInProgress){
+        if (audioWriter != nullptr) {
+            audioWriter->writeFromAudioSampleBuffer(buffer, 0, buffer.getNumSamples());
+        }
+    }
+    
     disablePlaybackButtonIfEnvelopeClosed(buffer);
     disablePlaybackButtonIfStreamFinished(buffer);
 }
@@ -243,6 +250,48 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
     }
 }
 
+void GameSFXGeneratorAudioProcessor::exportFilePrompt()
+{
+    GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(false);
+    GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
+    GameSFXGeneratorAudioProcessorEditor::enableExportButton(false);
+    GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(false);
+    GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(false);
+    GameSFXGeneratorAudioProcessorEditor::enableRandPitchEnvButton(false);
+
+    juce::FileChooser fileChooser("Choose a location",
+        juce::File::getSpecialLocation(juce::File::userDesktopDirectory),
+        "* .wav", true, false
+    );
+
+    if (fileChooser.browseForFileToSave(true)) {
+        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(true);
+
+        setGate(true);
+        setPlayback(true);
+
+        exportInProgress = true;
+
+        juce::File file(fileChooser.getResult());
+        file.deleteFile();
+
+        audioWriter.reset(wavFormat.createWriterFor(new juce::FileOutputStream(file),
+            44100,
+            2,
+            24,
+            {},
+            0));
+    }
+    else {
+        GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableExportButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandPitchEnvButton(true);
+    }
+}
+
 //Playback
 void GameSFXGeneratorAudioProcessor::setPlayback(bool gate) 
 {
@@ -258,13 +307,27 @@ void GameSFXGeneratorAudioProcessor::setPlayback(bool gate)
 void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer) {
     double atkTime = fUI->getParamValue("Env_Attack");
     double dcyTime = fUI->getParamValue("Env_Decay");
-    if (transportSource.getCurrentPosition() >= (atkTime + dcyTime)) {
+    if (transportSource.getCurrentPosition() >= ((atkTime + dcyTime) + 0.2)) {
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
+        if (exportInProgress) {
+            audioWriter.reset(wavFormat.createWriterFor(new juce::FileOutputStream(file),
+                44100,
+                2,
+                24,
+                {},
+                0));
+            exportInProgress = false;
+        }
         buffer.clear();
         setGate(false);
         setPlayback(false);
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableExportButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandPitchEnvButton(true);
     }
     else {
         return;
@@ -274,11 +337,25 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed(juce:
 void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer) {
     if (transportSource.hasStreamFinished()) {
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
+        if (exportInProgress) {
+            audioWriter.reset(wavFormat.createWriterFor(new juce::FileOutputStream(file),
+                44100,
+                2,
+                24,
+                {},
+                0));
+            exportInProgress = false;
+        }
         buffer.clear();
         setGate(false);
         setPlayback(false);
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
-        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);\
+        GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableExportButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableRandPitchEnvButton(true);
     }
     else {
         return;

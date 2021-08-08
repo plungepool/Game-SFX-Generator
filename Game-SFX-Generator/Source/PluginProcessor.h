@@ -60,6 +60,7 @@ public:
     //==============================================================================
     //Files
     void loadFilePrompt();
+    void exportFilePrompt();
     int randomizedSampleId;
 
     //Playback
@@ -108,7 +109,11 @@ private:
     juce::AudioFormatManager audioFormatManager;
     juce::WavAudioFormat wavFormat;
     std::unique_ptr <juce::AudioFormatReaderSource> readerSource;
+    std::unique_ptr<juce::AudioFormatWriter> audioWriter;
     juce::AudioTransportSource transportSource;
+
+    juce::File file;
+    bool exportInProgress = false;
 
     //Faust I/O
     MapUI* fUI;
