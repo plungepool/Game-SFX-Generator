@@ -187,6 +187,10 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
             audioWriter->writeFromAudioSampleBuffer(buffer, 0, buffer.getNumSamples());
         }
     }
+
+    if (transportSource.getCurrentPosition() >= (static_cast<double>(randomizedValueSusTime) + fUI->getParamValue("Env_Attack") + fUI->getParamValue("Env_Decay"))) {
+        setGate(false);
+    }
     
     disablePlaybackButtonIfEnvelopeClosed(buffer);
     disablePlaybackButtonIfStreamFinished(buffer);
@@ -243,7 +247,8 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
             transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
             readerSource.reset(tempSource.release());
             setGate(false);
-            setPlayback(false);
+            setTransport(false);
+            resetTransportPosition();
             GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
             sampleRateDebug = getSampleRate();
         }
@@ -268,7 +273,7 @@ void GameSFXGeneratorAudioProcessor::exportFilePrompt()
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(true);
 
         setGate(true);
-        setPlayback(true);
+        setTransport(true);
 
         exportInProgress = true;
 
@@ -293,21 +298,26 @@ void GameSFXGeneratorAudioProcessor::exportFilePrompt()
 }
 
 //Playback
-void GameSFXGeneratorAudioProcessor::setPlayback(bool gate) 
+void GameSFXGeneratorAudioProcessor::setTransport(bool gate) 
 {
     if (gate) {
         transportSource.start();
     }
     else {
         transportSource.stop();
-        transportSource.setPosition(0.0);
     }
+}
+
+void GameSFXGeneratorAudioProcessor::resetTransportPosition() {
+    transportSource.setPosition(0.0);
 }
 
 void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer) {
     double atkTime = fUI->getParamValue("Env_Attack");
     double dcyTime = fUI->getParamValue("Env_Decay");
-    if (transportSource.getCurrentPosition() >= ((atkTime + dcyTime) + 0.2)) {
+    double susTime = randomizedValueSusTime;
+    double relTime = fUI->getParamValue("Env_Release");
+    if (transportSource.getCurrentPosition() >= ((atkTime + dcyTime + susTime + relTime) + 0.2)) {
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
         if (exportInProgress) {
             audioWriter.reset(wavFormat.createWriterFor(new juce::FileOutputStream(file),
@@ -320,7 +330,8 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed(juce:
         }
         buffer.clear();
         setGate(false);
-        setPlayback(false);
+        setTransport(false);
+        resetTransportPosition();
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
@@ -348,7 +359,8 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished(juce:
         }
         buffer.clear();
         setGate(false);
-        setPlayback(false);
+        setTransport(false);
+        resetTransportPosition();
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);\
         GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
@@ -401,7 +413,8 @@ void GameSFXGeneratorAudioProcessor::randomizeSample()
         transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
         readerSource.reset(tempSource.release());
         setGate(false);
-        setPlayback(false);
+        setTransport(false);
+        resetTransportPosition();
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         sampleRateDebug = getSampleRate();
     }
@@ -440,7 +453,8 @@ void GameSFXGeneratorAudioProcessor::randomizePitch()
             transportSource.setSource(tempSource.get(), 0, nullptr, randomizedValue);
             readerSource.reset(tempSource.release());
             setGate(false);
-            setPlayback(false);
+            setTransport(false);
+            resetTransportPosition();
             GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
             sampleRateDebug = randomizedValue;
         }
@@ -452,7 +466,7 @@ void GameSFXGeneratorAudioProcessor::randomizeADSR()
     float resAtk = 100;
     int minAtk = 0;
     int maxAtk = (transportSource.getTotalLength() / getSampleRate()) * resAtk;
-    float randomizedValueAtk = randomInt(minAtk, maxAtk);
+    float randomizedValueAtk = randomNegBinomial(maxAtk, 0.75);
     fUI->setParamValue("Env_Attack", randomizedValueAtk / resAtk);
 
     float resDcy = 100;
@@ -463,6 +477,30 @@ void GameSFXGeneratorAudioProcessor::randomizeADSR()
         randomizedValueDcy = 1;
     }
     fUI->setParamValue("Env_Decay", randomizedValueDcy / resDcy);
+
+    float resSusTime = 100;
+    int minSusTime = 0;
+    int maxSusTime = ((transportSource.getTotalLength() / getSampleRate()) * resSusTime) - randomizedValueAtk - randomizedValueDcy;
+    randomizedValueSusTime = randomInt(minSusTime, maxSusTime);
+    if (randomizedValueSusTime < 1) {
+        randomizedValueSusTime = 1;
+    }
+    randomizedValueSusTime = randomizedValueSusTime / resSusTime;
+
+    float resRel = 100;
+    int minRel = 0;
+    int maxRel = ((transportSource.getTotalLength() / getSampleRate()) * resRel) - randomizedValueAtk - randomizedValueDcy - randomizedValueSusTime;
+    float randomizedValueRel = randomInt(minRel, maxRel);
+    if (randomizedValueRel < 1) {
+        randomizedValueRel = 1;
+    }
+    fUI->setParamValue("Env_Release", randomizedValueRel / resRel);
+
+    float resSusRatio = 1000;
+    int minSusRatio = 1;
+    int maxSusRatio = 1000;
+    float randomizeSusRatio = randomInt(minSusRatio, maxSusRatio);
+    fUI->setParamValue("Env_Sustain", randomizeSusRatio / resSusRatio);
 }
 
 void GameSFXGeneratorAudioProcessor::randomizeVibratoGroup()
@@ -639,14 +677,19 @@ std::string GameSFXGeneratorAudioProcessor::sampleDebug() {
     std::string pitchDebug = std::to_string(fUI->getParamValue("PitchShift"));
     std::string envatkDebug = std::to_string(fUI->getParamValue("Env_Attack"));
     std::string envdcyDebug = std::to_string(fUI->getParamValue("Env_Decay"));
+    std::string envsusDebug = std::to_string(randomizedValueSusTime);
+    std::string envsusTimeDebug = std::to_string(fUI->getParamValue("Env_Sustain"));
+    std::string envrelDebug = std::to_string(fUI->getParamValue("Env_Release"));
     std::string samplerateDebug = std::to_string(sampleRateDebug);
     std::string samplelengthDebug = std::to_string(transportSource.getTotalLength());
 
     std::string sampleDebugText = std::string(BinaryData::namedResourceList[randomizedSampleId]) + "\n" +
                                     "# of samples: " + std::to_string(BinaryData::namedResourceListSize) + "\n" +     
                                     "Pitch: " + pitchDebug.substr(0, 5) + " semi\n" +
-                                    "Atk: " + envatkDebug.substr(0, 4) + " sec\n" +
-                                    "Dcy: " + envdcyDebug.substr(0, 4) + " sec\n" +
+                                    "A:" + envatkDebug.substr(0, 4) + "s/" +
+                                    "D:" + envdcyDebug.substr(0, 4) + "s\n" +
+                                    "S:" + envsusTimeDebug.substr(0, 4) + "s " + envsusDebug.substr(1, 3) + "%/" +
+                                    "R:" + envrelDebug.substr(0, 4) + "s\n" +
                                     "Sample Rate: " + samplerateDebug.substr(0, 5) + "\n" +
                                     "Length: " + samplelengthDebug;
 
@@ -710,5 +753,13 @@ int GameSFXGeneratorAudioProcessor::randomGaussian(float mean, float stdDev) {
     std::mt19937 mt(rd());
     std::normal_distribution<double> dist(mean, stdDev);
 
+    return dist(mt);
+}
+
+int GameSFXGeneratorAudioProcessor::randomNegBinomial(float max, float ratio) {
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::negative_binomial_distribution<long> dist(max, ratio);
+    //not sure how this type of distribution works exactly yet
     return dist(mt);
 }

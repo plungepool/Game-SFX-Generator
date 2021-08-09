@@ -40,7 +40,8 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     playbackButton.onClick = [this] 
     { 
         audioProcessor.setGate(playbackButton.getToggleState());
-        audioProcessor.setPlayback(playbackButton.getToggleState());
+        audioProcessor.setTransport(playbackButton.getToggleState());
+        audioProcessor.resetTransportPosition();
         enableLoadFileButton(!playbackButton.getToggleState());
         enableExportButton(!playbackButton.getToggleState());
         enableRandSampleButton(!playbackButton.getToggleState());

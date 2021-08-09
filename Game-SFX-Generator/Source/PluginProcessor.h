@@ -62,9 +62,11 @@ public:
     void loadFilePrompt();
     void exportFilePrompt();
     int randomizedSampleId;
+    float randomizedValueSusTime;
 
     //Playback
-    void setPlayback(bool gate);
+    void setTransport(bool gate);
+    void resetTransportPosition();
     void disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer);
     void disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer);
 
@@ -124,6 +126,7 @@ private:
     //Random Number Functions
     int randomInt(float min, float max);
     int randomGaussian(float mean, float stdDev);
+    int randomNegBinomial(float max, float ratio);
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GameSFXGeneratorAudioProcessor)
