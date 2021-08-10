@@ -28,6 +28,7 @@ public:
     bool getPlaybackToggleState();
 
     void static enableLoadFileButton(bool state);
+    void static enableLoadRandomSampleButton(bool state);
     void static enablePlaybackButton(bool state);
     void static enableExportButton(bool state);
     void static enableRandSampleButton(bool state);
@@ -36,6 +37,7 @@ public:
 
 private:
     juce::TextButton static loadFileButton;
+    juce::TextButton static loadRandomSampleButton;
     juce::ToggleButton static playbackButton;
     juce::TextButton static exportFileButton;
 

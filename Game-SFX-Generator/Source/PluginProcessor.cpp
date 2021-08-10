@@ -258,6 +258,7 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
 void GameSFXGeneratorAudioProcessor::exportFilePrompt()
 {
     GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(false);
+    GameSFXGeneratorAudioProcessorEditor::enableLoadRandomSampleButton(false);
     GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
     GameSFXGeneratorAudioProcessorEditor::enableExportButton(false);
     GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(false);
@@ -289,6 +290,7 @@ void GameSFXGeneratorAudioProcessor::exportFilePrompt()
     }
     else {
         GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableLoadRandomSampleButton(true);
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableExportButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(true);
@@ -335,6 +337,7 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed(juce:
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableLoadRandomSampleButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableExportButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(true);
@@ -362,8 +365,9 @@ void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished(juce:
         setTransport(false);
         resetTransportPosition();
         GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
-        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);\
+        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
+        GameSFXGeneratorAudioProcessorEditor::enableLoadRandomSampleButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableExportButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(true);
         GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(true);
@@ -387,7 +391,10 @@ void GameSFXGeneratorAudioProcessor::setGate(bool gate)
 
 void GameSFXGeneratorAudioProcessor::randomizeSampleGroup()
 {
-    randomizeSample();
+    if (!transportSource.getTotalLength()) {
+        randomizeSample();
+    }
+
     randomizePitch();
     randomizeADSR();
 }

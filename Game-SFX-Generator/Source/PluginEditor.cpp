@@ -29,12 +29,19 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     };
     addAndMakeVisible(loadFileButton);
 
-    exportFileButton.setButtonText("Export as Wav");
-    exportFileButton.onClick = [this]
+    loadRandomSampleButton.setButtonText("New Sample");
+    loadRandomSampleButton.onClick = [this]
     {
-        audioProcessor.exportFilePrompt();
+        audioProcessor.randomizeSample();
+        audioProcessor.randomizeSampleGroup();
+        audioProcessor.randomizePitchEnvGroup();
+        audioProcessor.randomizeVibratoGroup();
+        sampleDebugText.setText(audioProcessor.sampleDebug());
+        vibDebugText.setText(audioProcessor.vibDebug());
+        pitchenvDebugText.setText(audioProcessor.pitchenvDebug());
+        repaint(0, 0, getWidth(), getHeight());
     };
-    addAndMakeVisible(exportFileButton);
+    addAndMakeVisible(loadRandomSampleButton);
 
     playbackButton.setButtonText("PLAY");
     playbackButton.onClick = [this] 
@@ -43,6 +50,7 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
         audioProcessor.setTransport(playbackButton.getToggleState());
         audioProcessor.resetTransportPosition();
         enableLoadFileButton(!playbackButton.getToggleState());
+        enableLoadRandomSampleButton(!playbackButton.getToggleState());
         enableExportButton(!playbackButton.getToggleState());
         enableRandSampleButton(!playbackButton.getToggleState());
         enableRandVibButton(!playbackButton.getToggleState());
@@ -50,8 +58,15 @@ GameSFXGeneratorAudioProcessorEditor::GameSFXGeneratorAudioProcessorEditor (Game
     };
     addAndMakeVisible(playbackButton);
 
+    exportFileButton.setButtonText("Export as Wav");
+    exportFileButton.onClick = [this]
+    {
+        audioProcessor.exportFilePrompt();
+    };
+    addAndMakeVisible(exportFileButton);
+
     //RANDOM SAMPLE GROUP
-    randomizeSampleGroup.setButtonText("Randomize Sample");
+    randomizeSampleGroup.setButtonText("Randomize Pitch and Envelope");
     randomizeSampleGroup.onClick = [this]
     {
         audioProcessor.randomizeSampleGroup();
@@ -102,9 +117,10 @@ void GameSFXGeneratorAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawFittedText(vibDebugText.getText(), getLocalBounds(), juce::Justification::centredBottom, 1);
     g.drawFittedText(pitchenvDebugText.getText(), getLocalBounds(), juce::Justification::bottomRight, 1);
 
-    loadFileButton.setBounds(0, 0, 100, 50);
+    loadFileButton.setBounds(0, 0, 60, 60);
+    loadRandomSampleButton.setBounds(60, 0, 60, 60);
+    playbackButton.setBounds((getWidth() / 2) - 25, 25, 100, 100);
     exportFileButton.setBounds(getWidth() - 100, 0, 100, 50);
-    playbackButton.setBounds((getWidth()/2) - 25, 25, 100, 100);
     randomizeSampleGroup.setBounds(50, 100, 100, 100);
     randomizeVibratoGroup.setBounds(150, 100, 100, 100);
     randomizePitchEnvGroup.setBounds(250, 100, 100, 100);
@@ -126,12 +142,24 @@ bool GameSFXGeneratorAudioProcessorEditor::getPlaybackToggleState() {
 
 juce::TextButton GameSFXGeneratorAudioProcessorEditor::loadFileButton;
 
+
 void GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(bool state) {
     if (state) {
         loadFileButton.setEnabled(true);
     }
     else {
         loadFileButton.setEnabled(false);
+    }
+}
+
+juce::TextButton GameSFXGeneratorAudioProcessorEditor::loadRandomSampleButton;
+
+void GameSFXGeneratorAudioProcessorEditor::enableLoadRandomSampleButton(bool state) {
+    if (state) {
+        loadRandomSampleButton.setEnabled(true);
+    }
+    else {
+        loadRandomSampleButton.setEnabled(false);
     }
 }
 
