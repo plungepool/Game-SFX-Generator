@@ -67,8 +67,7 @@ public:
     //Playback
     void setTransport(bool gate);
     void resetTransportPosition();
-    void disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer);
-    void disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer);
+    void disablePlaybackIfSoundHasEnded(juce::AudioBuffer<float>& buffer);
 
     //Faust Setters
     void setGate(bool gate);

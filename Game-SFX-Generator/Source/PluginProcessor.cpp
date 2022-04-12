@@ -192,8 +192,7 @@ void GameSFXGeneratorAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
         setGate(false);
     }
     
-    disablePlaybackButtonIfEnvelopeClosed(buffer);
-    disablePlaybackButtonIfStreamFinished(buffer);
+    disablePlaybackIfSoundHasEnded(buffer);
 }
 
 //==============================================================================
@@ -314,42 +313,13 @@ void GameSFXGeneratorAudioProcessor::resetTransportPosition() {
     transportSource.setPosition(0.0);
 }
 
-void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfEnvelopeClosed(juce::AudioBuffer<float>& buffer) {
+void GameSFXGeneratorAudioProcessor::disablePlaybackIfSoundHasEnded(juce::AudioBuffer<float>& buffer) {
     double atkTime = fUI->getParamValue("Env_Attack");
     double dcyTime = fUI->getParamValue("Env_Decay");
     double susTime = randomizedValueSusTime;
     double relTime = fUI->getParamValue("Env_Release");
-    if (transportSource.getCurrentPosition() >= ((atkTime + dcyTime + susTime + relTime) + 0.2)) {
-        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
-        if (exportInProgress) {
-            audioWriter.reset(wavFormat.createWriterFor(new juce::FileOutputStream(file),
-                44100,
-                2,
-                24,
-                {},
-                0));
-            exportInProgress = false;
-        }
-        buffer.clear();
-        setGate(false);
-        setTransport(false);
-        resetTransportPosition();
-        GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
-        GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(true);
-        GameSFXGeneratorAudioProcessorEditor::enableLoadFileButton(true);
-        GameSFXGeneratorAudioProcessorEditor::enableLoadRandomSampleButton(true);
-        GameSFXGeneratorAudioProcessorEditor::enableExportButton(true);
-        GameSFXGeneratorAudioProcessorEditor::enableRandSampleButton(true);
-        GameSFXGeneratorAudioProcessorEditor::enableRandVibButton(true);
-        GameSFXGeneratorAudioProcessorEditor::enableRandPitchEnvButton(true);
-    }
-    else {
-        return;
-    }
-}
-
-void GameSFXGeneratorAudioProcessor::disablePlaybackButtonIfStreamFinished(juce::AudioBuffer<float>& buffer) {
-    if (transportSource.hasStreamFinished()) {
+    if ((transportSource.getCurrentPosition() >= ((atkTime + dcyTime + susTime + relTime) + 0.2)) ||
+        transportSource.hasStreamFinished()) {
         GameSFXGeneratorAudioProcessorEditor::enablePlaybackButton(false);
         if (exportInProgress) {
             audioWriter.reset(wavFormat.createWriterFor(new juce::FileOutputStream(file),

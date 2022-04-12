@@ -2,5 +2,6 @@
 Game-SFX-Generator/Builds/*
 Game-SFX-Generator/Assets/*
 Game-SFX-Generator/Source/Faust/*
+Game-SFX-Generator/Source/SoundTouch/*
 Game-SFX-Generator/Source/SQLite/*
 Game-SFX-Generator/JuceLibraryCode/BinaryData*
