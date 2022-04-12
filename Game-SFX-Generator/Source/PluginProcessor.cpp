@@ -239,17 +239,19 @@ void GameSFXGeneratorAudioProcessor::loadFilePrompt()
 
     if (fileChooser.browseForFileToOpen()) {
         auto currentFile = fileChooser.getResult();
-        auto* audioReader = audioFormatManager.createReaderFor(currentFile);
+        if (currentFile.existsAsFile()) {
+            auto* audioReader = audioFormatManager.createReaderFor(currentFile);
 
-        if (audioReader != nullptr) {
-            std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
-            transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
-            readerSource.reset(tempSource.release());
-            setGate(false);
-            setTransport(false);
-            resetTransportPosition();
-            GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
-            sampleRateDebug = getSampleRate();
+            if (audioReader != nullptr) {
+                std::unique_ptr<juce::AudioFormatReaderSource> tempSource(new juce::AudioFormatReaderSource(audioReader, true));
+                transportSource.setSource(tempSource.get(), 0, nullptr, audioReader->sampleRate);
+                readerSource.reset(tempSource.release());
+                setGate(false);
+                setTransport(false);
+                resetTransportPosition();
+                GameSFXGeneratorAudioProcessorEditor::setPlaybackToggle(false);
+                sampleRateDebug = getSampleRate();
+            }
         }
     }
 }
